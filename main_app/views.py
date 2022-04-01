@@ -31,6 +31,7 @@ def signup(request):
             user = form.save()
             #login the user
             login(request, user)
+            Account.objects.create(user=request.user)
             return redirect('/')
         else:
             error_message = "Invalid Sign Up Submission - Try Again"
@@ -59,3 +60,5 @@ def upload(request):
             'uploaded_file_url': uploaded_file_url
         })
     return render(request, 'upload.html')
+
+

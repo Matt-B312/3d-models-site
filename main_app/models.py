@@ -10,15 +10,29 @@ from django.contrib.auth.models import AbstractUser
 
 
 ##Account
-class Account(models.Model):
-    picture = models.CharField(default=None, blank=True, null=True, max_length=2000)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+
+# class User(AbstractUser):
+#     picture = models.CharField(default=None, blank=True, null=True, max_length=2000)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+#     def get_absolute_url(self):
+#         return reverse('detail', kwargs = {'account_id': self.id})
+    
+#     def __str__(self):
+#         return self.username
+    
+
+class Account(models.Model):
+    picture = models.CharField(default='https://i.imgur.com/VKXouC4.png', blank=True, null=True, max_length=2000)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     def get_absolute_url(self):
         return reverse('detail', kwargs = {'account_id': self.id})
     
     def __str__(self):
         return self.username
+    
 
 
 ##Comment
@@ -27,6 +41,7 @@ class Comment(models.Model):
     files = models.FileField()
     images = models.CharField(default=None, blank=True, null=True, max_length=2000)
     text_content = models.CharField(max_length=1000)
+    title = models.CharField(max_length=100)
 
 
 
