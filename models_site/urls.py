@@ -25,6 +25,7 @@ from django.conf import settings
 from django.views.static import serve
 
 
+re_path(r'media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,5 +34,4 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += [re_path(r'^media/{?P<path>.*}$',
-                        serve, {'document_root': settings.MEDIA_ROOT,}),]
+    urlpatterns += [re_path(r'media/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),]
