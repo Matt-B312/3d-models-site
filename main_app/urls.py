@@ -8,5 +8,7 @@ urlpatterns = [
     
     #URL path for signup
     path('account/signup',views.signup,name='signup'),
+
+    path('upload/', views.simple_upload, name='upload'),
     
     ]   

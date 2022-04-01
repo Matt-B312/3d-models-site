@@ -1,11 +1,17 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from .models import Account, Comment, Post
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 # from .forms import UploadFileForm
 # from .forms import ModelFormWithFileField
 import os
@@ -42,3 +48,14 @@ def signup(request):
 #     else:
 #         form = ModelFormWithFileField()
 #     return render(request, 'upload.html', {'form': form})
+
+def simple_upload(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'core/simple_upload.html', {
+            'uploaded_file_url': uploaded_file_url
+        })
+    return render(request, 'core/simple_upload.html')
