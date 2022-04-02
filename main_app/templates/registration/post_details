@@ -46,9 +46,9 @@
     </div>
     <table>
       <tr>
-        <th>Title</th>
-        <th>Content</th>
-        <th>Images</th>
+        <th>test</th>
+        <th>test</th>
+        <th>test</th>
       </tr>
       {% for comment in post.comments%}
       <tr>

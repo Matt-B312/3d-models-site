@@ -10,8 +10,12 @@ urlpatterns = [
     path('posts/create', views.PostCreate.as_view(), name="post_create"),
     path('posts/<int:pk>/update/', views.PostUpdate.as_view(), name="post_update"),
     path('posts/<int:pk>/delete/', views.PostDelete.as_view(), name="post_delete"),
-    path('posts/<int:pk>/', views.PostDetail.as_view(), name='post_details'),
+    path('posts/<int:pk>/', views.PostDetail.as_view(), name='post_detail'),
     path('posts/', views.PostList.as_view(),name="posts_index"),
+    path('posts/<int:post_id>/add_photo/', views.add_photo, name='add_photo'),
+    # path('posts/<int:post_id>', views.posts_details, name="post_details"),
+    
+     path('post/<int:pk>/', views.PostDetail.as_view(), name='post_details'),
     
     
     #COMMENTS
