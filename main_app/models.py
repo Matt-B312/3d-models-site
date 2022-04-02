@@ -32,10 +32,7 @@ class Account(models.Model):
     def __str__(self):
         return self.user.username
 
-
-
-
-    
+ 
 
 ##Post
 
@@ -47,14 +44,15 @@ class Post(models.Model):
     tags = models.TextField(max_length=1000, default=None, blank=True, null=True)
     downloads = models.IntegerField(default=0)
     type = models.CharField(max_length=50, default="STL")
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.title
 
     # comments = models.ManyToManyField(Account)
     # favorites = models.ManyToManyField(Account)
-    
+
+
 ## Comment
 class Comment(models.Model):
     #username = models.CharField(max_length=200, default=None, blank=True)
@@ -63,8 +61,16 @@ class Comment(models.Model):
     title = models.CharField(max_length=100)
     post = models.ForeignKey(Post, on_delete=models.CASCADE,blank=True, null=True)
     # account = models.ForeignKey(Post, on_delete=models.CASCADE)
-    def get_absolute_url(self):
-        return reverse('posts')
+    
     
     def __str__(self):
         return self.title
+    
+    
+class Photo(models.Model):
+    url = models.CharField(max_length=200)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Photo for:  @{self.url}"
+    

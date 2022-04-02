@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from .models import Account, Comment, Post
+from .models import Account, Comment, Post, Photo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth.forms import UserCreationForm
@@ -8,6 +8,9 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
+import uuid
+import boto3
+
 
 
 
@@ -17,11 +20,42 @@ from django.core.files.storage import FileSystemStorage
 # from .forms import ModelFormWithFileField
 import os
 
+# Add these "constant" variables below the imports
+S3_BASE_URL = 'https://ca-central-1.amazonaws.com/'
+BUCKET = 'sei48-models'
+
+
+def add_photo(request, post_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('photo-file', None)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            # build the full url string
+            url = f"https://sei48-models.s3.ca-central-1.amazonaws.com/{key}"
+            # url = f"{S3_BASE_URL}{BUCKET}/{key}"
+            # we can assign to cat_id or cat (if you have a cat object)
+            photo = Photo(url=url, post_id=post_id)
+            photo.save()
+        except:
+            print('An error occurred uploading file to S3')
+    return render(request, 'home.html')
+    # return redirect('posts', post_id=post_id)
+
+
+
+
 # Create your views here.
 
 def home(request):
+    post_list = Post.objects.all()
     print(os.getenv('NAME'))
     return render(request, 'home.html')
+
 
 def signup(request):
     error_message = ''
@@ -97,6 +131,8 @@ class PostCreate(LoginRequiredMixin, CreateView):
     # fields = '__all__'
     fields = ['title','files','images','text_content','tags','type']
     
+    
+    
     #overriding in child class
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -119,6 +155,11 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 class PostDetail(LoginRequiredMixin, DetailView):
     model = Post
     
+# def posts_details(request, post_id):
+#     posts = Post.objects.get(id=post_id)
+#     return render(request, 'posts.html', post_id=post_id)
+
+  
 
 class PostList(LoginRequiredMixin, ListView):
     model = Post
@@ -131,10 +172,18 @@ class CommentCreate(LoginRequiredMixin, CreateView):
     # fields = '__all__'
     fields = ['title','images','text_content']
     
+    def get_initial(self):
+        initial = {}
+        for x in self.request.GET:
+            initial[x] = self.request.GET[x]
+        print("initial test",initial)
+        return initial
+    
+    
     #overriding in child class
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
     
     def get_absolute_url(self):
-        return reverse("/", kwargs={"comment_id": self.id})
+        return reverse("/", kwargs={"post_id": self.id})

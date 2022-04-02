@@ -1,4 +1,19 @@
 {% extends "base.html"%} {% block content %}
 
-<h1>This is the home page.</h1>
-{%endblock%}
+<h1>3D File List</h1>
+
+{% for post in post_list%}
+
+<a href="{% url 'post_details' post.id %}">
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">{{post.title}}</span>
+      <p><img src="{{post.images}}" alt="" /></p>
+      <p>{{post.text_content}}</p>
+      <p>Tags: {{post.tags}}</p>
+      <p>Download Count: {{post.downloads}}</p>
+      <p>{{account.name}}</p>
+    </div>
+  </div>
+</a>
+{%endfor%} {% endblock %}
