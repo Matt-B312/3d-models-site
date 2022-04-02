@@ -10,6 +10,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 import uuid
 import boto3
+import os
+from dotenv import load_dotenv
 
 
 
@@ -21,7 +23,8 @@ from django.core.files.storage import FileSystemStorage
 import os
 
 # Add these "constant" variables below the imports
-S3_BASE_URL = 'https://ca-central-1.amazonaws.com/'
+os.getenv('S3_BASE_URL')
+
 BUCKET = 'sei48-models'
 
 

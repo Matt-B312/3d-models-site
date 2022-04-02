@@ -4,7 +4,8 @@
 <h1>Add Post</h1>
 {% endif %}
 
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
+  
   {% csrf_token %}
   <table>
     {{form.as_table}}
