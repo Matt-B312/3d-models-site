@@ -23,7 +23,8 @@ from django.core.files.storage import FileSystemStorage
 import os
 
 # Add these "constant" variables below the imports
-os.getenv('S3_BASE_URL')
+S3_BASE_URL = os.getenv('S3_BASE_URL')
+S3_LINK_URL = os.getenv('S3_LINK_URL')
 
 BUCKET = 'sei48-models'
 
@@ -39,7 +40,8 @@ def add_photo(request, post_id):
         try:
             s3.upload_fileobj(photo_file, BUCKET, key)
             # build the full url string
-            url = f"https://sei48-models.s3.ca-central-1.amazonaws.com/{key}"
+            url = f"{S3_LINK_URL}{key}"
+            # url = f"{S3_BASE_URL}{BUCKET}/{key}"
             # url = f"{S3_BASE_URL}{BUCKET}/{key}"
             # we can assign to cat_id or cat (if you have a cat object)
             photo = Photo(url=url, post_id=post_id)
