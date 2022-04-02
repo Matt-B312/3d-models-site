@@ -62,3 +62,15 @@ def upload(request):
     return render(request, 'upload.html')
 
 
+
+
+
+class PostCreate(LoginRequiredMixin, CreateView):
+    model = Post
+    # fields = '__all__'
+    fields = ['title','files','images','text_content','images','']
+    
+    #overriding in child class
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
