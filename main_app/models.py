@@ -30,7 +30,7 @@ class Account(models.Model):
         return reverse('detail', kwargs = {'account_id': self.id})
     
     def __str__(self):
-        return self.user['username']
+        return self.user.username
 
 
 
@@ -47,14 +47,24 @@ class Post(models.Model):
     tags = models.TextField(max_length=1000, default=None, blank=True, null=True)
     downloads = models.IntegerField(default=0)
     type = models.CharField(max_length=50, default="STL")
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, default=1)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.title
 
     # comments = models.ManyToManyField(Account)
     # favorites = models.ManyToManyField(Account)
     
 ## Comment
 class Comment(models.Model):
+    #username = models.CharField(max_length=200, default=None, blank=True)
     images = models.CharField(max_length=2000, default=None, blank=True, null=True)
     text_content = models.CharField(max_length=3000)
     title = models.CharField(max_length=100)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE,blank=True, null=True)
+    # account = models.ForeignKey(Post, on_delete=models.CASCADE)
+    def get_absolute_url(self):
+        return reverse('posts')
+    
+    def __str__(self):
+        return self.title

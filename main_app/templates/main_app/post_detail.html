@@ -25,6 +25,21 @@
         </div>
       </div>
     </div>
+    <table>
+      <tr>
+        <th>test</th>
+        <th>test</th>
+        <th>test</th>
+      </tr>
+      {% for comment in post.comments%}
+      <tr>
+        <td>{{comment.title}}</td>
+        <td>{{comment.text_content}}</td>
+        <td>{{comment.images}}</td>
+      </tr>
+      {%endfor%}
+    </table>
   </div>
   {% endblock %}
 </div>
+
