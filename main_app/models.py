@@ -31,6 +31,8 @@ class Account(models.Model):
     
     def __str__(self):
         return self.user['username']
+    class Meta:
+        managed = True
 
 
 ## Comment
@@ -40,7 +42,8 @@ class Comment(models.Model):
     text_content = models.CharField(max_length=3000)
     title = models.CharField(max_length=100)
     account = models.ForeignKey(Account, on_delete=models.CASCADE, default=1)
-    
+    class Meta:
+        managed = True
 ##Post
 
 class Post(models.Model):
@@ -51,9 +54,11 @@ class Post(models.Model):
     tags = models.TextField(max_length=1000, default=None, blank=True, null=True)
     # download = models.FileField(upload_to="documents")
     # download = models.FileField()
-    download = models.CharField(max_length=1000, default=None, blank=True, null=True)
+    downloads = models.IntegerField(default=0)
     type = models.CharField(max_length=50, default="STL")
     account = models.ForeignKey(Account, on_delete=models.CASCADE, default=1)
+    class Meta:
+        managed = True
     # comments = models.ManyToManyField(Account)
     # favorites = models.ManyToManyField(Account)
     

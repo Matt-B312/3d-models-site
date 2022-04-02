@@ -7,6 +7,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse
 
 
 
@@ -68,9 +69,22 @@ def upload(request):
 class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
     # fields = '__all__'
-    fields = ['title','files','images','text_content','images','']
+    fields = ['title','files','images','text_content','tags','type']
     
     #overriding in child class
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+    
+    def get_absolute_url(self):
+        return reverse("/", kwargs={"post_id": self.id})
+    
+    
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields = ['title','files','images','text_content','tags','type']
+    
+
+class PostDelete(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = "/"    
