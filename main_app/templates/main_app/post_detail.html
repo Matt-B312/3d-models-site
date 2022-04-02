@@ -16,7 +16,7 @@
           <div class="card-panel teal-text center-align">
             No Photos Uploaded
           </div>
-          {% endfor %} {{post.files}}
+          {% endfor %}<img src="/media/{{post.files}}" alt="" />
           <p>{{post.text_content}}</p>
           <p>Tags: {{post.tags}}</p>
           <p>Download Count: {{post.downloads}}</p>

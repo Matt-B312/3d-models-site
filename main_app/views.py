@@ -14,8 +14,6 @@ import os
 from dotenv import load_dotenv
 
 
-
-
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 # from .forms import UploadFileForm
@@ -23,17 +21,10 @@ from django.core.files.storage import FileSystemStorage
 import os
 
 
-
-
-
-
-
 # Add these "constant" variables below the imports
 S3_BASE_URL = os.getenv('S3_BASE_URL')
 S3_LINK_URL = os.getenv('S3_LINK_URL')
-
 BUCKET = os.getenv('BUCKET')
-
 
 def add_photo(request, post_id):
     # photo-file will be the "name" attribute on the <input type="file">
@@ -56,9 +47,6 @@ def add_photo(request, post_id):
             print('An error occurred uploading file to S3')
     return render(request, 'home.html')
     # return redirect('posts', post_id=post_id)
-
-
-
 
 # Create your views here.
 
@@ -106,9 +94,6 @@ def upload(request):
             'uploaded_file_url': uploaded_file_url
         })
     return render(request, 'upload.html')
-
-
-
 
 
 class PostCreate(LoginRequiredMixin, CreateView):
@@ -171,13 +156,10 @@ class PostDetail(LoginRequiredMixin, DetailView):
 #     return render(request, 'posts.html', post_id=post_id)
 
   
-
 class PostList(LoginRequiredMixin, ListView):
     model = Post
     
-    
-    
-
+        
 class CommentCreate(LoginRequiredMixin, CreateView):
     model = Comment
     # fields = '__all__'
