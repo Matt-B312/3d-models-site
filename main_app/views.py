@@ -22,11 +22,17 @@ from django.core.files.storage import FileSystemStorage
 # from .forms import ModelFormWithFileField
 import os
 
+
+
+
+
+
+
 # Add these "constant" variables below the imports
 S3_BASE_URL = os.getenv('S3_BASE_URL')
 S3_LINK_URL = os.getenv('S3_LINK_URL')
 
-BUCKET = 'sei48-models'
+BUCKET = os.getenv('BUCKET')
 
 
 def add_photo(request, post_id):
