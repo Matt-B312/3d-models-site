@@ -1,0 +1,39 @@
+body {
+  background-color: silver;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+footer.page-footer {
+  padding-top: 0;
+  text-align: right;
+}
+
+.cat-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.right-thing {
+  display: flex;
+}
+
+img {
+  max-width: 300px;
+  max-height: 200px;
+  border-radius: 10px;
+  margin-left: 10px;
+}
+.card {
+  display: flex;
+  width: max-content;
+  margin-left: 5px;
+  margin-right: 5px;
+  background-color: rgba(245, 245, 245, 0.915) !important;
+}
