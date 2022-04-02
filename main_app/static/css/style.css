@@ -37,3 +37,17 @@ img {
   margin-right: 5px;
   background-color: rgba(245, 245, 245, 0.915) !important;
 }
+
+.card-content {
+  padding: 15px !important;
+}
+
+nav {
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #131a20fb !important;
+}
+
+footer {
+  background-color: #131a20fb !important;
+}
