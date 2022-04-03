@@ -52,8 +52,8 @@ def add_photo(request, post_id):
 
 def home(request):
     post_list = Post.objects.all()
-    print(os.getenv('NAME'))
-    return render(request, 'home.html')
+    
+    return render(request, 'home.html', {'post_list': post_list})
 
 
 def signup(request):
