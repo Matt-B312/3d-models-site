@@ -92,3 +92,9 @@ form {
   justify-items: center;
   width: 100% !important;
 }
+
+.earth model-viewer {
+  width: 800px;
+  height: 800px;
+  margin: 0 auto;
+}
