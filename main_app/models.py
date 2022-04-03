@@ -6,6 +6,7 @@ from pkg_resources import to_filename
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
+from django.shortcuts import redirect, render
 
 
 
@@ -45,6 +46,10 @@ class Post(models.Model):
     downloads = models.IntegerField(default=0)
     type = models.CharField(max_length=50, default="STL")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    
+    def get_absolute_url(self):
+        return reverse("post_detail", kwargs={"pk": self.id})
     
     def __str__(self):
         return self.title
