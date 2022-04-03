@@ -103,9 +103,9 @@ class PostCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
     
-    def get_absolute_url(self):
-        return redirect("post", post_id=self.id)
-        # return reverse("/", kwargs={"post_id": self.id})
+    # def get_absolute_url(self):
+    #     return redirect("posts_index")
+    #     # return reverse("/", kwargs={"post_id": self.id})
     
     
 class PostUpdate(LoginRequiredMixin, UpdateView):
