@@ -4,34 +4,51 @@
 
 <div class="list">
   {% for post in post_list%}
-
-  <a href="{% url 'post_details' post.id %}">
-    <div class="card">
+  <div class="card">
+    <div class="card-content">
       <div class="card-content">
-        <div class="card-content">
+        <a href="{% url 'post_details' post.id %}">
           <span class="card-title">{{post.title}}</span>
-          <img src="{{post.images}}" alt="" />
-          <!-- Insert photo markup below this comment -->
-          <div class="thumbnail">
-            <img src="/media/{{post.files}}" alt="" />
-          </div>
-          <div class="gallery">
-            {% for photo in post.photo_set.all %}
-            <img class="responsive-img card-panel" src="{{photo.url}}" />
-            {% empty %}
-            <div class="card-panel teal-text center-align">
-              No Photos Uploaded
+        </a>
+
+        <!-- Insert photo markup below this comment -->
+        <div class="thumbnail">
+          <model-viewer
+            bounds="tight"
+            enable-pan
+            src="/media/{{post.model}}"
+            ar
+            ar-modes="webxr scene-viewer quick-look"
+            camera-controls
+            environment-image="neutral"
+            poster="/media/{{post.model}}"
+            seamless-poster
+            shadow-intensity="1"
+            auto-rotate
+            interaction-prompt-threshold="15000000"
+          >
+            <div class="progress-bar hide" slot="progress-bar">
+              <div class="update-bar"></div>
             </div>
-            {% endfor %}
-          </div>
-          <p>{{post.text_content}}</p>
-          <p>Tags: {{post.tags}}</p>
-          <p>Download Count: {{post.downloads}}</p>
-          <p>{{account.name}}</p>
+            <button slot="ar-button" id="ar-button">View in your space</button>
+          </model-viewer>
         </div>
+        <div class="gallery">
+          {% for photo in post.photo_set.all %}
+          <img class="responsive-img card-panel" src="{{photo.url}}" />
+          {% empty %}
+          <div class="card-panel teal-text center-align">
+            No Photos Uploaded
+          </div>
+          {% endfor %}
+        </div>
+        <p>{{post.text_content}}</p>
+        <p>Tags: {{post.tags}}</p>
+        <p>Download Count: {{post.downloads}}</p>
+        <p>{{account.name}}</p>
       </div>
     </div>
-  </a>
+  </div>
   {%endfor%}
 </div>
 {% endblock %}

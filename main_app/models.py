@@ -38,8 +38,8 @@ class Account(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
-    files = models.FileField(blank=True, null=True, upload_to="models/%Y/%m/$D/")
-    images = models.CharField(max_length=2000, default=None, blank=True, null=True )
+    model = models.FileField(blank=True, null=True, upload_to="models/%Y/%m/$D/")
+    # images = models.CharField(max_length=2000, default=None, blank=True, null=True )
     text_content = models.TextField(max_length=1000, default=None, blank=True, null=True)
     tags = models.TextField(max_length=1000, default=None, blank=True, null=True)
     downloads = models.IntegerField(default=0)

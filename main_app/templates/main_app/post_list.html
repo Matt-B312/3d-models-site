@@ -10,18 +10,18 @@
         <a href="{% url 'post_details' post.id %}">
           <span class="card-title">{{post.title}}</span>
         </a>
-        <img src="{{post.images}}" alt="" />
+
         <!-- Insert photo markup below this comment -->
         <div class="thumbnail">
           <model-viewer
             bounds="tight"
             enable-pan
-            src="/media/{{post.files}}"
+            src="/media/{{post.model}}"
             ar
             ar-modes="webxr scene-viewer quick-look"
             camera-controls
             environment-image="neutral"
-            poster="/media/{{post.files}}"
+            poster="/media/{{post.model}}"
             seamless-poster
             shadow-intensity="1"
             auto-rotate

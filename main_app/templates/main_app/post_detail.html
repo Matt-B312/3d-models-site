@@ -8,18 +8,18 @@
       <div class="card-content">
         <div class="card-content">
           <span class="card-title">{{post.title}}</span>
-          <img src="{{post.images}}" alt="" />
+
           <!-- Insert photo markup below this comment -->
           <div class="thumbnail">
             <model-viewer
               bounds="tight"
               enable-pan
-              src="/media/{{post.files}}"
+              src="/media/{{post.model}}"
               ar
               ar-modes="webxr scene-viewer quick-look"
               camera-controls
               environment-image="neutral"
-              poster="/media/{{post.files}}"
+              poster="/media/{{post.model}}"
               seamless-poster
               shadow-intensity="1"
               interaction-prompt-threshold="15000000"
