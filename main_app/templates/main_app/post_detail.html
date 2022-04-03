@@ -10,13 +10,37 @@
           <span class="card-title">{{post.title}}</span>
           <img src="{{post.images}}" alt="" />
           <!-- Insert photo markup below this comment -->
-          {% for photo in post.photo_set.all %}
-          <img class="responsive-img card-panel" src="{{photo.url}}" />
-          {% empty %}
-          <div class="card-panel teal-text center-align">
-            No Photos Uploaded
+          <div class="thumbnail">
+            <model-viewer
+              bounds="tight"
+              enable-pan
+              src="/media/{{post.files}}"
+              ar
+              ar-modes="webxr scene-viewer quick-look"
+              camera-controls
+              environment-image="neutral"
+              poster="/media/{{post.files}}"
+              seamless-poster
+              shadow-intensity="1"
+            >
+              <div class="progress-bar hide" slot="progress-bar">
+                <div class="update-bar"></div>
+              </div>
+              <button slot="ar-button" id="ar-button">
+                View in your space
+              </button>
+            </model-viewer>
           </div>
-          {% endfor %}<img src="/media/{{post.files}}" alt="" />
+          <div class="gallery">
+            {% for photo in post.photo_set.all %}
+
+            <img class="responsive-img card-panel" src="{{photo.url}}" />
+            {% empty %}
+            <div class="card-panel teal-text center-align">
+              No Photos Uploaded
+            </div>
+            {% endfor %}
+          </div>
           <p>{{post.text_content}}</p>
           <p>Tags: {{post.tags}}</p>
           <p>Download Count: {{post.downloads}}</p>

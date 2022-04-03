@@ -2,18 +2,36 @@
 
 <h1>3D File List</h1>
 
-{% for post in post_list%}
+<div class="list">
+  {% for post in post_list%}
 
-<a href="{% url 'post_details' post.id %}">
-  <div class="card">
-    <div class="card-content">
-      <span class="card-title">{{post.title}}</span>
-      <p><img src="{{post.images}}" alt="" /></p>
-      <p>{{post.text_content}}</p>
-      <p>Tags: {{post.tags}}</p>
-      <p>Download Count: {{post.downloads}}</p>
-      <p>{{account.name}}</p>
+  <a href="{% url 'post_details' post.id %}">
+    <div class="card">
+      <div class="card-content">
+        <div class="card-content">
+          <span class="card-title">{{post.title}}</span>
+          <img src="{{post.images}}" alt="" />
+          <!-- Insert photo markup below this comment -->
+          <div class="thumbnail">
+            <img src="/media/{{post.files}}" alt="" />
+          </div>
+          <div class="gallery">
+            {% for photo in post.photo_set.all %}
+            <img class="responsive-img card-panel" src="{{photo.url}}" />
+            {% empty %}
+            <div class="card-panel teal-text center-align">
+              No Photos Uploaded
+            </div>
+            {% endfor %}
+          </div>
+          <p>{{post.text_content}}</p>
+          <p>Tags: {{post.tags}}</p>
+          <p>Download Count: {{post.downloads}}</p>
+          <p>{{account.name}}</p>
+        </div>
+      </div>
     </div>
-  </div>
-</a>
-{%endfor%} {% endblock %}
+  </a>
+  {%endfor%}
+</div>
+{% endblock %}
