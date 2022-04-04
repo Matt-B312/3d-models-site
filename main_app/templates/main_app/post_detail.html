@@ -69,8 +69,15 @@
         </div>
       </div>
     </div>
-
   </br>
+
+  <hr>
+  <form action=" {% url 'like_post' post.id %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" name="post_id" value="{{ post.id }}" class="btn color blue" >Like</button> -{{post.total_likes}} Likes
+  </form>
+  </br>
+
   <h5> Comments </h5>
 
   {% if not post.comments.all %}

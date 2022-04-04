@@ -174,3 +174,9 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
 class CommentDelete(LoginRequiredMixin, DeleteView):
     model = Comment
     success_url = "/" 
+
+def LikeView(request, pk):
+    print("POST", Post)
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    post.likes.add(request.user)
+    return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
