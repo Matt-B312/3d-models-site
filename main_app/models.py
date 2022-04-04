@@ -46,6 +46,10 @@ class Post(models.Model):
     downloads = models.IntegerField(default=0)
     type = models.CharField(max_length=50, default="STL")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, related_name='blog_posts')
+    
+    def total_likes(self):
+        return self.likes.count()
     
     
     def get_absolute_url(self):
