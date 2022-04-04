@@ -10,7 +10,7 @@
           <span class="card-title">{{post.title}}</span>
 
           <!-- Insert photo markup below this comment -->
-          <div class="thumbnail">
+          <div class="detail-thumbnail">
             <model-viewer
               bounds="tight"
               enable-pan
@@ -86,8 +86,10 @@
         </br>
         {{ comment.text_content }}
       </br>
+      {%if comment.images %}
         <img src='{{ comment.images }}'>
       </br></br>
+      {%endif%}
     </hr>
     {% endfor %}
   {% endif %}

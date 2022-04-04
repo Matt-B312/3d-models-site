@@ -39,7 +39,7 @@ class Account(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
-    model = models.FileField(blank=True, null=True, upload_to="models/%Y/%m/$D/")
+    model = models.FileField(blank=True, null=True, upload_to="models/%Y/%m/$D/",default="models/2022/04/$D/Earth.glb")
     # images = models.CharField(max_length=2000, default=None, blank=True, null=True )
     text_content = models.TextField(max_length=1000, default=None, blank=True, null=True)
     tags = models.TextField(max_length=1000, default=None, blank=True, null=True)
@@ -72,6 +72,8 @@ class Comment(models.Model):
     
     # class Meta:
     #     ordering = ['created_on']
+    def get_absolute_url(self):
+        return reverse("post_detail", kwargs={"pk": self.id})
     
     def __str__(self):
         return '{}'.format(self.title)

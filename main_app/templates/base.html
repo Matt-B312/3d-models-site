@@ -23,7 +23,7 @@
     ></script>
     {% endcomment %}
 
-    <title>3D Model Site</title>
+    <title>3D World</title>
     <link
       rel="stylesheet"
       type="text/css"
@@ -34,7 +34,21 @@
     <div class="navbar-fixed">
       <nav>
         <div class="nav-wrapper">
-          <a href="{% url 'home' %}" class="brand-logo left">3D Models</a>
+          <a href="{% url 'home' %}" class="brand-logo left">3D World</a
+          ><span class="babyearth">
+            <model-viewer
+              src="/media/models/Earth.glb"
+              poster="media/Earth-poster.webp"
+              seamless-poster
+              environment-image="neutral"
+              shadow-intensity="1"
+              autoplay
+              auto-rotate
+              basic
+              rotation-per-second="400%"
+            >
+            </model-viewer>
+          </span>
 
           <div class="brand-logo center">
             <ul class="right">
@@ -61,7 +75,7 @@
 
     <main class="container">{% block content %} {% endblock %}</main>
     <footer class="page-footer">
-      <div class="center">All Rights reserved &copy; 2022 3D Model Site</div>
+      <div class="center">All Rights reserved &copy; 2022 3D World</div>
     </footer>
 
     <script
