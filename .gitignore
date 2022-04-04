@@ -4,3 +4,4 @@
 ./env
 / .env
 /media/models/2022
+/main_app/__pycache__
