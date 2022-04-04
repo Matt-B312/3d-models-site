@@ -15,12 +15,12 @@ urlpatterns = [
     path('posts/<int:post_id>/add_photo/', views.add_photo, name='add_photo'),
     # path('posts/<int:post_id>', views.posts_details, name="post_details"),
     
-     path('post/<int:pk>/', views.PostDetail.as_view(), name='post_details'),
+    path('post/<int:pk>/', views.PostDetail.as_view(), name='post_details'),
     
     
     #COMMENTS
-    path('posts/<int:pk>/comments/create', views.CommentCreate.as_view(), name="comment_create"),
-    
+    # path('posts/<int:pk>/comments/create', views.CommentCreate.as_view(), name="comment_create"),
+    path('post/<int:pk>/comment/', views.CommentCreate.as_view(), name='comment_create'),   
     
     #URL path for signup
     path('account/signup',views.signup,name='signup'),

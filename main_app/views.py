@@ -1,17 +1,19 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Account, Comment, Post, Photo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse
+from django.urls import reverse, path
 import uuid
 import boto3
 import os
 from dotenv import load_dotenv
+from .forms import CommentForm
+
 
 
 from django.conf import settings
@@ -128,6 +130,27 @@ class PostDetail(LoginRequiredMixin, DetailView):
 class PostList(LoginRequiredMixin, ListView):
     model = Post
     
+# class CommentCreate(LoginRequiredMixin, CreateView):
+#     model = Comment
+#     # fields = '__all__'
+#     fields = ['title','images','text_content']
+    
+#     def get_initial(self):
+#         initial = {}
+#         for x in self.request.GET:
+#             initial[x] = self.request.GET[x]
+#         print("initial test",initial)
+#         return initial
+    
+    
+    #overriding in child class
+    # def form_valid(self, form):
+    #     form.instance.user = self.request.user
+    #     return super().form_valid(form)
+    
+    # def get_absolute_url(self):
+    #     return reverse("/", kwargs={"post_id": self.id})
+
 class CommentCreate(LoginRequiredMixin, CreateView):
     model = Comment
     # fields = '__all__'
@@ -143,8 +166,12 @@ class CommentCreate(LoginRequiredMixin, CreateView):
     
     #overriding in child class
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+        # comment = form.save(commit=False)
+        # comment.post = 
+        form.instance.post_id = self.kwargs.get('pk')
+        print("HELLO:", form.instance.post_id)
+        return super(CommentCreate, self).form_valid(form)
     
     def get_absolute_url(self):
         return reverse("/", kwargs={"post_id": self.id})
+    
