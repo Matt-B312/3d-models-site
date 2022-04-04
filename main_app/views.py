@@ -162,11 +162,10 @@ class CommentCreate(LoginRequiredMixin, CreateView):
         # comment = form.save(commit=False)
         # comment.post = 
         form.instance.post_id = self.kwargs.get('pk')
-        print("HELLO:", form.instance.post_id)
+        # print("HELLO:", form.instance.post_id)
+        # print("HI THERE:", self.kwargs.get('pk'))
         return super(CommentCreate, self).form_valid(form)
     
-    def get_absolute_url(self):
-        return reverse("/", kwargs={"post_id": self.id})
     
 class CommentUpdate(LoginRequiredMixin, UpdateView):
     model = Comment

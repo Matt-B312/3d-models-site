@@ -49,6 +49,7 @@ class Post(models.Model):
     
     
     def get_absolute_url(self):
+        print("here")
         return reverse("post_detail", kwargs={"pk": self.id})
     
     def __str__(self):
@@ -73,7 +74,8 @@ class Comment(models.Model):
     # class Meta:
     #     ordering = ['created_on']
     def get_absolute_url(self):
-        return reverse("post_detail", kwargs={"pk": self.id})
+        print('MM', self.post.id)
+        return reverse("post_detail", kwargs={"pk": self.post.id})
     
     def __str__(self):
         return '{}'.format(self.title)
