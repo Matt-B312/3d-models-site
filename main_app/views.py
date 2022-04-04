@@ -116,9 +116,16 @@ class PostDelete(LoginRequiredMixin, DeleteView):
     success_url = "/"    
     
 
-class PostDetail(LoginRequiredMixin, DetailView):
-    model = Post
-    
+# class PostDetail(LoginRequiredMixin, DetailView):
+#     model = Post
+def detail(request, pk):
+    post = Post.objects.get(id=pk)
+    if request.user in Post.objects.get(id=pk).likes.all():
+        liked = True
+    else:
+        liked = False
+    print(Post.objects.get(id=pk).likes.all())
+    return render(request,'main_app/post_detail.html',{'post': post, 'liked': liked})
 
 class PostList(LoginRequiredMixin, ListView):
     model = Post
@@ -179,4 +186,12 @@ def LikeView(request, pk):
     print("POST", Post)
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
     post.likes.add(request.user)
+    return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
+
+def UnlikeView(request, pk):
+    print("POST", Post)
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    print('before',post.likes)
+    post.likes.remove(request.user)
+    print('after', post.likes)
     return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
