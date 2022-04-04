@@ -2,7 +2,9 @@ body {
   background-color: silver;
   display: flex;
   min-height: 100vh;
+  max-width: fit-content;
   flex-direction: column;
+  
 }
 
 main {
@@ -31,15 +33,19 @@ img {
   margin-left: 10px;
 }
 .card {
-  display: flex;
+  /* display: flex; */
   width: max-content;
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  /* margin-left: 5px;
+  margin-right: 5px; */
   background-color: rgba(245, 245, 245, 0.915) !important;
 }
 
 .card-content {
-  padding: 15px !important;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1px !important;
 }
 
 nav {
@@ -132,6 +138,9 @@ model-viewer {
 /* Hide the images by default */
 .mySlides {
   display: none;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }
 
 /* Add a pointer when hovering over the thumbnail images */
@@ -207,6 +216,6 @@ model-viewer {
   opacity: 1;
 }
 
-.gallery div {
-  margin: auto;
+.containergallery {
+  max-width: 50%;
 }
