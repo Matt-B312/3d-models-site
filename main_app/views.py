@@ -105,10 +105,6 @@ class PostCreate(LoginRequiredMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
     
-    # def get_absolute_url(self):
-    #     return redirect("posts_index")
-    #     # return reverse("/", kwargs={"post_id": self.id})
-    
     
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
@@ -123,9 +119,6 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 class PostDetail(LoginRequiredMixin, DetailView):
     model = Post
     
-# def posts_details(request, post_id):
-#     posts = Post.objects.get(id=post_id)
-#     return render(request, 'posts.html', post_id=post_id)
 
 class PostList(LoginRequiredMixin, ListView):
     model = Post

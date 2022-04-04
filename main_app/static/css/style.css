@@ -93,8 +93,29 @@ form {
   width: 100% !important;
 }
 
+model-viewer {
+  width: 310px;
+  height: 200px;
+  --poster-color: rgba(255, 255, 255, 0);
+}
+
 .earth model-viewer {
-  width: 800px;
-  height: 800px;
+  width: 700px;
+  height: 700px;
+  margin: 0 auto;
+}
+.babyearth model-viewer {
+  width: 45px;
+  height: 45px;
+  margin: 0 auto;
+  display: inline-block;
+  position: relative;
+  left: 150px;
+  top: 15px;
+}
+
+.detail-thumbnail model-viewer {
+  width: 600px;
+  height: 600px;
   margin: 0 auto;
 }
