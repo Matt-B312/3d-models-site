@@ -47,9 +47,9 @@
           <p>Download Count: {{post.downloads}}</p>
           <p>{{account.name}}</p>
         </div>
-        <div>
+        {% comment %} <div>
           <a href="{% url 'comment_create' post.id %}">Add Comment</a>
-        </div>
+        </div> {% endcomment %}
         <div>
           <div class="card-action">
             <form
@@ -69,7 +69,29 @@
         </div>
       </div>
     </div>
-    <table>
+
+  </br>
+  <h5> Comments </h5>
+
+  {% if not post.comments.all %}
+    No Comments yet... <a href="{% url 'comment_create' post.pk %}">
+    Add One</a>
+  {% else %}
+  </br>
+  <a href="{% url 'comment_create' post.pk %}">Add Comment</a>
+</br>
+      {% for comment in post.comments.all %}  
+</br></hr>
+        <strong>{{ comment.title }}</strong>
+        </br>
+        {{ comment.text_content }}
+      </br>
+        <img src='{{ comment.images }}'>
+      </br></br>
+    </hr>
+    {% endfor %}
+  {% endif %}
+    {% comment %} <table>
       <tr>
         <th>Title</th>
         <th>Content</th>
@@ -82,7 +104,7 @@
         <td>{{comment.images}}</td>
       </tr>
       {%endfor%}
-    </table>
+    </table> {% endcomment %}
   </div>
   {% endblock %}
 </div>
