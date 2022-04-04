@@ -168,3 +168,6 @@ class CommentCreate(LoginRequiredMixin, CreateView):
     def get_absolute_url(self):
         return reverse("/", kwargs={"post_id": self.id})
     
+class CommentDelete(LoginRequiredMixin, DeleteView):
+    model = Comment
+    success_url = "/" 

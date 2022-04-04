@@ -22,6 +22,7 @@ urlpatterns = [
     # path('posts/<int:pk>/comments/create', views.CommentCreate.as_view(), name="comment_create"),
     path('post/<int:pk>/comment/', views.CommentCreate.as_view(), name='comment_create'),   
     
+    
     #URL path for signup
     path('account/signup',views.signup,name='signup'),
 
