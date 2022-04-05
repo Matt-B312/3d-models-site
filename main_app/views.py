@@ -8,6 +8,9 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, path
+
+from .forms import AccountCreate
+
 import uuid
 import boto3
 import os
@@ -60,9 +63,12 @@ def signup(request):
     error_message = ''
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
+        account_form = AccountCreate(request.POST)
         if form.is_valid():
             #save user to DB
             user = form.save()
+            account = account_form.save(commit=False)
+            account.user = user
             #login the user
             login(request, user)
             Account.objects.create(user=request.user)
@@ -70,7 +76,8 @@ def signup(request):
         else:
             error_message = "Invalid Sign Up Submission - Try Again"
     form = UserCreationForm()
-    context = {'form':form, 'error_message': error_message}
+    account_form = AccountCreate()
+    context = {'form':form, 'error_message': error_message , 'account_form': account_form}
     return render(request, 'registration/signup.html', context)
 
 def upload(request):
@@ -206,6 +213,4 @@ def UnlikeView(request, pk):
     print('after', post.likes)
     return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
 
-
-    
 
