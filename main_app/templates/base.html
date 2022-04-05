@@ -61,7 +61,8 @@
                 <a href="{%url 'posts_index' %}">Models</a>
               </li>
               <li><a href="{% url 'logout' %}">Log Out</a></li>
-              <li class="hello"><a href="{% url 'profile' %}">Hi {{user.username}}</a></li> 
+              <li><img class="circle icon" src="{{ user.account.picture }}"></li>
+              <li><a href="{% url 'profile' %}">Hi {{user.username}}</a></li> 
               {%else%}
               <li>
                 <a href="{%url 'login' %}">Log In</a>
