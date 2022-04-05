@@ -12,6 +12,7 @@ import uuid
 import boto3
 import os
 from dotenv import load_dotenv
+from django.db.models import Q
 
 
 
@@ -207,6 +208,9 @@ def UnlikeView(request, pk):
     return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
 
 def SearchPost(request):
-    if request.method == "post":
-
+    if request.method == "POST":
+        searched = request.POST['searched']
+        posts = Post.objects.filter(Q(tags__contains=searched)| Q(title__contains=searched))
+        return render(request, 'main_app/post_search.html', {'searched': searched, 'posts': posts})
+    else:
         return render(request, 'main_app/post_search.html', {})

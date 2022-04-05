@@ -74,7 +74,7 @@
             <form class="searchbar" method='post' action=" {% url 'search_post' %}">
                {% csrf_token %}
               <div class="input-field left" >
-                <input id="search" type="search" placeholder="Search" required>
+                <input id="search" type="search" placeholder="Search" name="searched" required>
            
               </div>
             </form> 
