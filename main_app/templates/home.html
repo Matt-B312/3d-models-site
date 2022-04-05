@@ -27,7 +27,7 @@
   <div class="card">
     <div class="card-content">
       <div class="card-content">
-        <a href="{% url 'post_details' post.id %}">
+        <a href="{% url 'post_detail' post.id %}">
           <span class="card-title">{{post.title}}</span>
         </a>
 
@@ -36,13 +36,13 @@
           <model-viewer
             bounds="tight"
             enable-pan
-            src="/media/{{post.model}}"
+            src="{{post.model}}"
             ar
             disable-zoom
             ar-modes="webxr scene-viewer quick-look"
             camera-controls
             environment-image="neutral"
-            poster="/media/{{post.model}}"
+            poster="{{post.model}}"
             seamless-poster
             shadow-intensity="1"
             auto-rotate

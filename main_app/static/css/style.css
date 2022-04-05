@@ -2,9 +2,8 @@ body {
   background-color: silver;
   display: flex;
   min-height: 100vh;
-  max-width: fit-content;
+  /* max-width: fit-content; */
   flex-direction: column;
-  
 }
 
 main {
@@ -103,6 +102,8 @@ model-viewer {
   width: 310px;
   height: 200px;
   --poster-color: rgba(255, 255, 255, 0);
+  --progress-bar-height: 0px;
+  --progress-bar-color: none;
 }
 
 .earth model-viewer {
@@ -218,4 +219,8 @@ model-viewer {
 
 .containergallery {
   max-width: 50%;
+}
+
+.unlike:hover:before {
+  content: "Un";
 }
