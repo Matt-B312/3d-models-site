@@ -9,11 +9,12 @@ urlpatterns = [
     
     #POSTs
     path('posts/create', views.PostCreate.as_view(), name="post_create"),
+    path('posts', views.posts_index, name="posts_index"),
     path('posts/<int:pk>/update/', views.PostUpdate.as_view(), name="post_update"),
     path('posts/<int:pk>/delete/', views.PostDelete.as_view(), name="post_delete"),
     path('posts/<int:pk>/', views.detail, name='post_detail'),
     # path('posts/<int:pk>/', views.PostDetail.as_view(), name='post_detail'),
-    path('posts/', views.PostList.as_view(),name="posts_index"),
+    # path('posts/', views.PostList.as_view(),name="posts_index"),
     path('posts/<int:post_id>/add_photo/', views.add_photo, name='add_photo'),
     # path('posts/<int:post_id>', views.posts_details, name="post_details"),
 
@@ -31,7 +32,8 @@ urlpatterns = [
     
     #URL path for signup
     path('account/signup',views.signup,name='signup'),
+    path('account/edit_profile',views.edit_profile,name='edit_profile'),
 
-    path('upload/', views.upload, name='upload'),
+    # path('upload/', views.upload, name='upload'),
     
     ]   
