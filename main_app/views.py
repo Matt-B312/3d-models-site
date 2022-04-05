@@ -46,7 +46,7 @@ def add_photo(request, post_id):
             photo.save()
         except:
             print('An error occurred uploading file to S3')
-    return render(request, 'home.html')
+    return HttpResponseRedirect(reverse('post_detail', args=[post_id]))
     # return redirect('posts', post_id=post_id)
 
 # Create your views here.
@@ -95,10 +95,38 @@ def upload(request):
         })
     return render(request, 'upload.html')
 
+def add_model(request, post_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    photo_file = request.FILES.get('model', None)
+    print("photo file test",photo_file)
+    if photo_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+        print("key test", key)
+        # just in case something goes wrong
+        try:
+            s3.upload_fileobj(photo_file, BUCKET, key)
+            # build the full url string
+            url = f"{S3_LINK_URL}{key}"
+            # print("url test",url)
+            photo = Photo(url=url, post_id=post_id)
+            post = Post.objects.get(id=post_id)
+            # print("post test",post.model)
+            # print("photo url",photo.url)
+            post.model = photo.url
+            photo.save()
+            post.save()
+        except:
+            print('An error occurred uploading file to S3')
+        
+    
+
 class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
     # fields = '__all__'
     fields = ['title','model','text_content','tags','type']
+    success_url = '/main_app/templates/home.html'
     
     #overriding in child class
     def form_valid(self, form, *args,**kwargs):
@@ -107,6 +135,13 @@ class PostCreate(LoginRequiredMixin, CreateView):
         form.user_id = self.request.user.id
         form.save()
         add_model(self.request, form.id)
+        post = Post.objects.get(id=form.id)
+        print("post test",post.title)
+        return HttpResponseRedirect(reverse('post_detail', args=[form.id]))
+         
+        
+
+    
     
     
 class PostUpdate(LoginRequiredMixin, UpdateView):
@@ -199,31 +234,6 @@ def UnlikeView(request, pk):
     print('after', post.likes)
     return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
 
-def add_model(request, post_id):
-    # photo-file will be the "name" attribute on the <input type="file">
-    photo_file = request.FILES.get('model', None)
-    print("photo file test",photo_file)
-    if photo_file:
-        s3 = boto3.client('s3')
-        # need a unique "key" for S3 / needs image file extension too
-        key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
-        print("key test", key)
-        # just in case something goes wrong
-        try:
-            s3.upload_fileobj(photo_file, BUCKET, key)
-            # build the full url string
-            url = f"{S3_LINK_URL}{key}"
-            # print("url test",url)
-            photo = Photo(url=url, post_id=post_id)
-            post = Post.objects.get(id=post_id)
-            # print("post test",post.model)
-            # print("photo url",photo.url)
-            post.model = photo.url
-            photo.save()
-            post.save()
-        except:
-            print('An error occurred uploading file to S3')
-        
-    return render(request, 'home.html')
 
+    
 
