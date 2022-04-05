@@ -69,7 +69,21 @@
               <li><a href="{% url 'signup' %}">Sign Up</a></li>
               {%endif%}
             </ul>
+            
+            <div class="left">
+            <form class="searchbar" method='post' action=" {% url 'search_post' %}">
+               {% csrf_token %}
+              <div class="input-field left" >
+                <input id="search" type="search" placeholder="Search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons">close</i>
+              </div>
+            </form> 
           </div>
+          
+        
+        </div>
+
         </div>
       </nav>
     </div>

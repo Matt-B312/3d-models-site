@@ -231,3 +231,7 @@ model-viewer {
   flex-wrap: nowrap;
   display: flex;
 }
+
+.searchbar {
+  visibility: hidden;
+}
