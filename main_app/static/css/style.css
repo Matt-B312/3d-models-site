@@ -293,6 +293,7 @@ img.responsive-img {
   align-items: center;
 }
 
+
 .nav-wrapper .input-field input[type="search"] {
   border: 0;
   -webkit-box-shadow: none;
@@ -302,3 +303,14 @@ img.responsive-img {
   position: relative;
   top: -10px;
 }
+
+img.icon{
+  width: 45px;
+  height: 45px;
+  margin: 0 auto;
+  display: inline-block;
+  position: relative;
+  left: 150px;
+  top: 15px;
+}
+
