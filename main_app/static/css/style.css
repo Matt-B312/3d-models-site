@@ -235,10 +235,10 @@ model-viewer {
 }
 
 .searchbar {
-  height: 50px;
+  height: 35px;
   width: 150px;
   position: relative;
-  top: 08px;
+  top: 12px;
 }
 
 /* matts edits */
@@ -254,7 +254,7 @@ model-viewer {
 }
 
 .demo {
-  object-fit: cover;
+  object-fit: fill;
 }
 img.responsive-img.card-panel {
   margin-left: 0 auto;
@@ -262,12 +262,20 @@ img.responsive-img.card-panel {
 }
 
 img.responsive-img {
-  max-height: 600px;
+  display: block;
+  max-width: 230px;
+  height: 300px;
+  width: auto;
+}
+
+.mySlides img.responsive-img {
+  max-height: 300px;
   min-height: 300px;
   max-width: 600px;
   min-width: 300px;
   object-fit: fill;
 }
+
 /* Dylan edits below */
 .image-form {
   background-color: rgba(240, 248, 255, 0) !important;
@@ -289,4 +297,8 @@ img.responsive-img {
   border: 0;
   -webkit-box-shadow: none;
   box-shadow: none;
+  padding-left: 0;
+  height: 25px;
+  position: relative;
+  top: -10px;
 }
