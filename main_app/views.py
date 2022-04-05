@@ -16,7 +16,10 @@ import uuid
 import boto3
 import os
 from dotenv import load_dotenv
+
+from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 
 
@@ -243,6 +246,15 @@ def UnlikeView(request, pk):
     print('after', post.likes)
     return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
 
+
+def SearchPost(request):
+    if request.method == "POST":
+        searched = request.POST['searched']
+        posts = Post.objects.filter(Q(tags__contains=searched)| Q(title__contains=searched))
+        return render(request, 'main_app/post_search.html', {'searched': searched, 'posts': posts})
+    else:
+        return render(request, 'main_app/post_search.html', {})
+
 class UserEditView(generic.CreateView):
     form_class = EditProfileForm
     template = 'registration/edit_profile.html'
@@ -280,3 +292,4 @@ def edit_profile(request):
 #     form = UserCreationForm()
 #     context = {'form':form, 'error_message': error_message}
 #     return render(request, 'registration/signup.html', context)
+
