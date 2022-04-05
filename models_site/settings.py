@@ -14,7 +14,7 @@ from hashlib import new
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-from matplotlib import testing
+# from matplotlib import testing
 
 load_dotenv()
 

@@ -146,6 +146,7 @@ model-viewer {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+  justify-content: center;
 }
 
 /* Add a pointer when hovering over the thumbnail images */
@@ -251,6 +252,10 @@ model-viewer {
 
 .demo {
   object-fit: cover;
+}
+img.responsive-img.card-panel {
+  margin-left: 0 auto;
+  margin-right: 0 auto;
 }
 
 img.responsive-img {
