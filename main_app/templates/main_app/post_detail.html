@@ -33,7 +33,7 @@
             </model-viewer>
           </div>
         <div class="picture-viewer">
-           <div class="container gallery">
+           <div class="container-gallery">
             {% for photo in post.photo_set.all %}
             <div class="mySlides">
               <img class="responsive-img card-panel" src="{{photo.url}}">
@@ -53,24 +53,24 @@
             <div class="caption-container">
               <p id="caption"></p>
             </div>
+      <div class="scroll-container">
+         <div class="colume-container">
             {% for photo in post.photo_set.all %}
             <div class="column">
-              <img class="demo curser" src="{{photo.url}}" style="width:100%" onclick="currentSlide({{photo.id}})">
+              <img class="demo curser" src="{{photo.url}}" style="width:100px; height:100px;" onclick="currentSlide({{photo.id}})">
             </div>
+          
             {% empty %}
             
 
             {% endfor %}
           </div>
         </div>
+      </div>
+      </div>
         <br>
         <br>
-        <Br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+      
 
     
         

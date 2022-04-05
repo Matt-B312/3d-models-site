@@ -2,19 +2,21 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Account, Comment, Post, Photo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views import generic
 from django.views.generic import ListView, DetailView, TemplateView
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, path
-
 from .forms import AccountCreate
+from .forms import EditProfileForm
 
 import uuid
 import boto3
 import os
 from dotenv import load_dotenv
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 
@@ -55,8 +57,30 @@ def add_photo(request, post_id):
 
 def home(request):
     post_list = Post.objects.all()
-    
-    return render(request, 'home.html', {'post_list': post_list})
+    #infiniscroll test
+    page = request.GET.get('page', 1)
+    paginator = Paginator(post_list, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'home.html', {'post_list': post_list , 'posts': posts})
+
+
+def posts_index(request):
+    post_list = Post.objects.all()
+    #infiniscroll test
+    page = request.GET.get('page', 1)
+    paginator = Paginator(post_list, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'main_app/posts_index.html', {'post_list': post_list , 'posts': posts})
 
 
 def signup(request):
@@ -168,8 +192,8 @@ def detail(request, pk):
     print(Post.objects.get(id=pk).likes.all())
     return render(request,'main_app/post_detail.html',{'post': post, 'liked': liked})
 
-class PostList(LoginRequiredMixin, ListView):
-    model = Post
+# class PostList(LoginRequiredMixin, ListView):
+#     model = Post
     
 
 
@@ -219,4 +243,40 @@ def UnlikeView(request, pk):
     print('after', post.likes)
     return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
 
+class UserEditView(generic.CreateView):
+    form_class = EditProfileForm
+    template = 'registration/edit_profile.html'
+    success_url = '/home' 
 
+def edit_profile(request):
+    error_message = ''
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            #save user to DB
+            Account.objects.update(user=request.user)
+            form.save()
+            return redirect('/home/')
+        
+        else:
+            error_message = "Invalid Edit Submission - Try Again"
+    form = EditProfileForm(instance=request.user)
+    context = {'form':form, 'error_message': error_message}
+    return render(request, 'registration/edit_profile.html', context)
+
+# def signup(request):
+#     error_message = ''
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+#         if form.is_valid():
+#             #save user to DB
+#             user = form.save()
+#             #login the user
+#             login(request, user)
+#             Account.objects.create(user=request.user)
+#             return redirect('/')
+#         else:
+#             error_message = "Invalid Sign Up Submission - Try Again"
+#     form = UserCreationForm()
+#     context = {'form':form, 'error_message': error_message}
+#     return render(request, 'registration/signup.html', context)

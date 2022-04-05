@@ -2,7 +2,6 @@
 <div align="center">
   <a href="https://github.com/DKotzer/3d-models-site">
 
-
 ![3d](https://user-images.githubusercontent.com/34380246/161459562-8f24140a-1ddb-49df-ab03-b62be923950c.png)
 </a>
 
@@ -33,9 +32,9 @@ The home page when logged in will be a list of your favorite models.
 
 ## Post List Page
 
-The Post list page will display all of the models on the site, maybe with infiniscroll.
+The Post list page will display all of the models on the site with limited infinscroll functionality to minimize .
 
-## Post Detail Page:
+## Post Detail Page
 
 Each post will have a detail page that allows the post creator to upload more images/edit post and allows users to download the files and comment/favorite/like.
 
@@ -51,6 +50,13 @@ For our third project at software engineering bootcamp we are making a 3D model 
 The purpose of the project is to demonstrate and practice our newly learned skills from unit 3: Django, Python, and postgreSQL.
 
 3D Models Site was built in one week.
+
+## The Team / Contact
+
+- [Stanley Balakai](https://github.com/stanley-balakai)
+- [Muhammad Hammad Riaz](https://www.linkedin.com/in/muhammad-hammad-riaz/)
+- [Matthew Leberton](https://www.linkedin.com/in/matthewlebreton/)
+- [Dylan Kotzer](https://www.linkedin.com/in/dylan-kotzer-3a5421190/)
 
 ## Built With:
 
@@ -68,12 +74,9 @@ The purpose of the project is to demonstrate and practice our newly learned skil
 
 ## Original Plan
 
-Original wireframe images.
+Original wireframe images:
+[![name](https://i.imgur.com/bZNXvZF.png)](https://i.imgur.com/bZNXvZF.png)
 
-## Contact
-
-<!-- MARKDOWN LINKS & IMAGES -->
-
-[linkedin-url]:
-[product-screenshot]:
-[here]:
+![alt text](https://i.imgur.com/9XyRYu1.png)
+Original ERD:
+![alt text](https://i.imgur.com/PuZmpTC.png)
