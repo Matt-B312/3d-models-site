@@ -36,4 +36,6 @@ urlpatterns = [
 
     # path('upload/', views.upload, name='upload'),
     
+    path('profile/', views.profile, name='profile'),
+    
     ]   
