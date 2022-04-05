@@ -234,14 +234,17 @@ model-viewer {
   display: flex;
 }
 
-/* .searchbar {
-  visibility: hidden;
-} */
+.searchbar {
+  height: 50px;
+  width: 150px;
+  position: relative;
+  top: 08px;
+}
 
 /* matts edits */
 .colume-container {
   height: 95px;
-  width: 100vw;
+  width: 670px;
 }
 
 .scroll-container {
@@ -259,9 +262,11 @@ img.responsive-img.card-panel {
 }
 
 img.responsive-img {
-  height: 150px;
-  width: 180px;
-  object-fit: cover;
+  max-height: 600px;
+  min-height: 300px;
+  max-width: 600px;
+  min-width: 300px;
+  object-fit: fill;
 }
 /* Dylan edits below */
 .image-form {
@@ -278,4 +283,10 @@ img.responsive-img {
   align-content: center;
   flex-direction: column;
   align-items: center;
+}
+
+.nav-wrapper .input-field input[type="search"] {
+  border: 0;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
