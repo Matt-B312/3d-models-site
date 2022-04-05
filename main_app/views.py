@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse, path
+from django.urls import reverse, path, reverse_lazy
 from .forms import AccountCreate
 from .forms import EditProfileForm
 
@@ -229,8 +229,31 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
     
 class CommentDelete(LoginRequiredMixin, DeleteView):
     model = Comment
-    def get_success_url(self):
-        return self.request.GET.get('next', reverse('home'))  
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('post_detail', self.post.id)
+    def delete(self, request, *args, **kwargs):
+        self.book_pk = self.get_object().post.id
+        return super(CommentDelete, self).delete(request, *args, **kwargs)
+    
+            
+    
+    # def get_success_url(self):
+    #     comment = Comment.objects.get(id=self.id)
+    #     print('comment test', comment)
+    #     post = Post.objects.get(id=comment.id)
+    #     print('post test', post)
+    #     return self.request.GET.get('next', reverse('home'))  
+    
+# def form_valid(self, form, *args,**kwargs):
+#         print("POST Test",self.request.POST)
+#         form = Post(title=self.request.POST.get('title'),text_content=self.request.POST.get('text_content'),tags=self.request.POST.get('tags') )
+#         form.user_id = self.request.user.id
+#         form.save()
+#         add_model(self.request, form.id)
+#         post = Post.objects.get(id=form.id)
+#         print("post test",post.title)
+#         return HttpResponseRedirect(reverse('post_detail', args=[form.id]))
+    
 
 def LikeView(request, pk):
     print("POST", Post)
