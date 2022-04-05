@@ -207,5 +207,6 @@ def UnlikeView(request, pk):
     return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
 
 def SearchPost(request):
-    
-    return render(request, 'main_app/post_search.html', {})
+    if request.method == "post":
+
+        return render(request, 'main_app/post_search.html', {})
