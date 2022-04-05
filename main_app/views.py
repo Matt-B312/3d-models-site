@@ -12,7 +12,6 @@ import uuid
 import boto3
 import os
 from dotenv import load_dotenv
-from .forms import CommentForm
 
 
 
@@ -74,16 +73,6 @@ def signup(request):
     context = {'form':form, 'error_message': error_message}
     return render(request, 'registration/signup.html', context)
 
-# def upload_file(request):
-#     if request.method == 'POST':
-#         form = ModelFormWithFileField(request.POST, request.FILES)
-#         if form.is_valid():
-#             # file is saved
-#             form.save()
-#             return HttpResponseRedirect('/success/url/')
-#     else:
-#         form = ModelFormWithFileField()
-#     return render(request, 'upload.html', {'form': form})
 def upload(request):
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
@@ -151,7 +140,8 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
 
 class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
-    success_url = "/"    
+    success_url = "/"   
+    
     
 
 # class PostDetail(LoginRequiredMixin, DetailView):
@@ -168,26 +158,7 @@ def detail(request, pk):
 class PostList(LoginRequiredMixin, ListView):
     model = Post
     
-# class CommentCreate(LoginRequiredMixin, CreateView):
-#     model = Comment
-#     # fields = '__all__'
-#     fields = ['title','images','text_content']
-    
-#     def get_initial(self):
-#         initial = {}
-#         for x in self.request.GET:
-#             initial[x] = self.request.GET[x]
-#         print("initial test",initial)
-#         return initial
-    
-    
-    #overriding in child class
-    # def form_valid(self, form):
-    #     form.instance.user = self.request.user
-    #     return super().form_valid(form)
-    
-    # def get_absolute_url(self):
-    #     return reverse("/", kwargs={"post_id": self.id})
+
 
 class CommentCreate(LoginRequiredMixin, CreateView):
     model = Comment
@@ -218,7 +189,8 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
     
 class CommentDelete(LoginRequiredMixin, DeleteView):
     model = Comment
-    success_url = "/" 
+    def get_success_url(self):
+        return self.request.GET.get('next', reverse('home'))  
 
 def LikeView(request, pk):
     print("POST", Post)
