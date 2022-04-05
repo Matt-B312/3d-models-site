@@ -99,8 +99,8 @@ form {
 }
 
 model-viewer {
-  width: 310px;
-  height: 200px;
+  width: 350px;
+  height: 282px;
   --poster-color: rgba(255, 255, 255, 0);
   --progress-bar-height: 0px;
   --progress-bar-color: none;
@@ -223,4 +223,11 @@ model-viewer {
 
 .unlike:hover:before {
   content: "Un";
+}
+
+.list-gallery {
+  max-width: 360px;
+  overflow: hidden;
+  flex-wrap: nowrap;
+  display: flex;
 }

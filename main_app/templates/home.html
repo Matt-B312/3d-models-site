@@ -24,9 +24,9 @@
 
 <div class="list">
   {% for post in post_list%}
-  <div class="card">
-    <div class="card-content">
-      <div class="card-content">
+  <div class="card home-card">
+    <div class="card-content home-card">
+      <div class="card-content home-card">
         <a href="{% url 'post_detail' post.id %}">
           <span class="card-title">{{post.title}}</span>
         </a>
@@ -54,7 +54,7 @@
             <button slot="ar-button" id="ar-button">View in your space</button>
           </model-viewer>
         </div>
-        <div class="gallery">
+        <div class="gallery list-gallery">
           {% for photo in post.photo_set.all %}
           <img class="responsive-img card-panel" src="{{photo.url}}" />
           {% empty %} {% endfor %}

@@ -34,7 +34,7 @@
             <button slot="ar-button" id="ar-button">View in your space</button>
           </model-viewer>
         </div>
-        <div class="gallery">
+        <div class="gallery list-gallery">
           {% for photo in post.photo_set.all %}
           <img class="responsive-img card-panel" src="{{photo.url}}" />
           {% empty %} {% endfor %}
