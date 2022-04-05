@@ -239,6 +239,7 @@ model-viewer {
   width: 150px;
   position: relative;
   top: 12px;
+  margin-right: 30px;
 }
 
 /* matts edits */
@@ -293,7 +294,6 @@ img.responsive-img {
   align-items: center;
 }
 
-
 .nav-wrapper .input-field input[type="search"] {
   border: 0;
   -webkit-box-shadow: none;
@@ -304,7 +304,7 @@ img.responsive-img {
   top: -10px;
 }
 
-img.icon{
+img.icon {
   width: 45px;
   height: 45px;
   margin: 0 auto;
@@ -312,4 +312,3 @@ img.icon{
   position: relative;
   top: 10px;
 }
-
