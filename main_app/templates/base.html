@@ -61,29 +61,37 @@
                 <a href="{%url 'posts_index' %}">Models</a>
               </li>
               <li><a href="{% url 'logout' %}">Log Out</a></li>
+
+
               <li><img class="circle icon" src="{{ user.account.picture }}"></li>
-              <li><a href="{% url 'profile' %}">Hi {{user.username}}</a></li> 
+              <li><a href="{% url 'profile' %}">{{user.username}}</a></li> 
+
               {%else%}
               <li>
                 <a href="{%url 'login' %}">Log In</a>
               </li>
               <li><a href="{% url 'signup' %}">Sign Up</a></li>
               {%endif%}
-            </ul>
-            
-            <div class="left">
-            <form class="searchbar" method='post' action=" {% url 'search_post' %}">
-               {% csrf_token %}
-              <div class="input-field left" >
-                <input id="search" type="search" placeholder="Search" name="searched" required>
-           
+              <div class="left">
+                <form
+                  class="searchbar left"
+                  method="post"
+                  action=" {% url 'search_post' %}"
+                >
+                  {% csrf_token %}
+                  <div class="input-field left">
+                    <input
+                      id="search"
+                      type="search"
+                      placeholder="Search"
+                      name="searched"
+                      required
+                    />
+                  </div>
+                </form>
               </div>
-            </form> 
+            </ul>
           </div>
-          
-        
-        </div>
-
         </div>
       </nav>
     </div>

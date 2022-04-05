@@ -250,7 +250,7 @@ def UnlikeView(request, pk):
 def SearchPost(request):
     if request.method == "POST":
         searched = request.POST['searched']
-        posts = Post.objects.filter(Q(tags__contains=searched)| Q(title__contains=searched))
+        posts = Post.objects.filter(Q(tags__icontains=searched)| Q(title__icontains=searched))
         return render(request, 'main_app/post_search.html', {'searched': searched, 'posts': posts})
     else:
         return render(request, 'main_app/post_search.html', {})
