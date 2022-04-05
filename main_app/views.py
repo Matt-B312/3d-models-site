@@ -91,6 +91,12 @@ def upload(request):
         })
     return render(request, 'upload.html')
 
+@login_required
+def profile(request):
+    profile_details = Account.objects.all
+    return render(request, 'registration/profile.html', {'profile_details':profile_details})
+
+
 def add_model(request, post_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('model', None)

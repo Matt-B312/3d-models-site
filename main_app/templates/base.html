@@ -61,7 +61,7 @@
                 <a href="{%url 'posts_index' %}">Posts</a>
               </li>
               <li><a href="{% url 'logout' %}">Log Out</a></li>
-              <li class="hello">Hi {{user.username}}</li>
+              <li class="hello"><a href="{% url 'profile' %}">Hi {{user.username}}</a></li> 
               {%else%}
               <li>
                 <a href="{%url 'login' %}">Log In</a>
