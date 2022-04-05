@@ -22,7 +22,7 @@
       crossorigin="anonymous"
     ></script>
     {% endcomment %}
-   
+
     <title>3D World</title>
     <link
       rel="stylesheet"
@@ -55,10 +55,10 @@
             <ul class="right">
               {% if user.is_authenticated %}
               <li>
-                <a href="{%url 'post_create' %}">Add Post</a>
+                <a href="{%url 'post_create' %}">Add Model</a>
               </li>
               <li>
-                <a href="{%url 'posts_index' %}">Posts</a>
+                <a href="{%url 'posts_index' %}">Models</a>
               </li>
               <li><a href="{% url 'logout' %}">Log Out</a></li>
               <li class="hello">Hi {{user.username}}</li>
