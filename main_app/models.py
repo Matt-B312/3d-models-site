@@ -24,7 +24,7 @@ from django.shortcuts import redirect, render
 
 class Account(models.Model):
     picture = models.CharField(default='https://i.imgur.com/VKXouC4.png', blank=True, null=True, max_length=2000)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     # likes = models.ManyToManyField(Comment)
 
     def get_absolute_url(self):
