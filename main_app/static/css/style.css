@@ -73,6 +73,9 @@ form {
   outline: 3px solid #00b44b;
 }
 
+.card-content {
+  max-width: 60vw;
+}
 .card-content img {
   margin: auto;
 }
@@ -99,7 +102,7 @@ form {
 }
 
 model-viewer {
-  width: 350px;
+  width: 389px;
   height: 282px;
   --poster-color: rgba(255, 255, 255, 0);
   --progress-bar-height: 0px;
@@ -134,6 +137,7 @@ model-viewer {
 /* Position the image container (needed to position the left and right arrows) */
 .container {
   position: relative;
+  
 }
 
 /* Hide the images by default */
@@ -142,6 +146,7 @@ model-viewer {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
+  justify-content: center;
 }
 
 /* Add a pointer when hovering over the thumbnail images */
@@ -154,10 +159,10 @@ model-viewer {
 .next {
   cursor: pointer;
   position: absolute;
-  top: 40%;
+  top: 55%;
   width: auto;
   padding: 16px;
-  margin-top: -50px;
+  margin-top: -10px;
   color: white;
   font-weight: bold;
   font-size: 20px;
@@ -204,7 +209,9 @@ model-viewer {
 /* Six columns side by side */
 .column {
   float: left;
-  width: 16.66%;
+  /* width: 16.66%; */
+  width: 100px;
+  height: 100px;
 }
 
 /* Add a transparency effect for thumnbail images */
@@ -217,16 +224,15 @@ model-viewer {
   opacity: 1;
 }
 
-.containergallery {
-  max-width: 50%;
-}
+
+
 
 .unlike:hover:before {
   content: "Un";
 }
 
 .list-gallery {
-  max-width: 360px;
+  max-width: 390px;
   overflow: hidden;
   flex-wrap: nowrap;
   display: flex;

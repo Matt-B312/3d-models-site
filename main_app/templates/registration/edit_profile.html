@@ -1,0 +1,15 @@
+{%extends 'base.html'%} {% block content%}
+<h1>Edit Profile</h1>
+
+{% if error_message %}
+<p class="red-text">{{error_message}}</p>
+
+{%endif%}
+
+<form action="{% url 'home' %}" method="POST">
+  {% csrf_token %} {{form.as_p}}
+  <input type="submit" value="Update Profile" class="btn" />
+  <input type="hidden" name="text" value="{{next}}" />
+</form>
+
+{%endblock%}
