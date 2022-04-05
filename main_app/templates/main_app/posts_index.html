@@ -1,26 +1,7 @@
 {% extends "base.html"%} {% block content %}
 
-<h1>3D World</h1>
+<h1>All Models</h1>
 
-<div class="earth">
-  <model-viewer
-    class="earth"
-    disable-zoom
-    src="media/models/NeilArmstrong.glb"
-    poster="media/models/NeilArmstrong-poster.webp"
-    seamless-poster
-    environment-image="neutral"
-    shadow-intensity="1"
-    autoplay
-    ar
-    ar-modes="webxr scene-viewer quick-look"
-    camera-controls
-    auto-rotate
-    interaction-prompt-threshold="15000000"
-    rotation-per-second="250%"
-  >
-  </model-viewer>
-</div>
 <div class="infinite-container">
   <div class="list">
     {% for post in posts%}
@@ -76,6 +57,12 @@
   class="infinite-more-link btn center"
   href="?page={{ posts.next_page_number }}"
   >More Models</a
+>
+{% endif %} {% if posts.has_previous %}
+<a
+  class="infinite-more-link btn center"
+  href="?page={{ posts.previous_page_number }}"
+  >Previous Page</a
 >
 {% endif %}
 
