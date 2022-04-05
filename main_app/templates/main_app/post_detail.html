@@ -14,12 +14,12 @@
             <model-viewer
               bounds="tight"
               enable-pan
-              src="/media/{{post.model}}"
+              src="{{post.model}}"
               ar
               ar-modes="webxr scene-viewer quick-look"
               camera-controls
               environment-image="neutral"
-              poster="/media/{{post.model}}"
+              poster="{{post.model}}"
               seamless-poster
               shadow-intensity="1"
               interaction-prompt-threshold="15000000"
@@ -59,9 +59,7 @@
             </div>
             {% empty %}
             
-            <div class="card-panel teal-text center-align">
-              No Photos Uploaded
-            </div>
+
             {% endfor %}
           </div>
         </div>
@@ -81,6 +79,7 @@
         <div>
           <p>{{post.text_content}}</p>
           <p>Tags: {{post.tags}}</p>
+          <a href="{{post.model}}"><input type="button" value="Download" class="btn"></a>
           <p>Download Count: {{post.downloads}}</p>
           <p>{{account.name}}</p>
           </div>
@@ -89,12 +88,12 @@
           <a href="{% url 'comment_create' post.id %}">Add Comment</a>
         </div> {% endcomment %}
         
-          <div class="card-action">
+          <div class="image-form">
             <form
               action="{% url 'add_photo' post.id %}"
               enctype="multipart/form-data"
               method="POST"
-              class="card-panel"
+              class="image-form"
             >
               {% csrf_token %}
               <input type="file" name="photo-file" />
@@ -113,12 +112,12 @@
   {% if not liked %}
   <form action=" {% url 'like_post' post.id %}" method="POST">
     {% csrf_token %}
-    <button type="submit" name="post_id" value="{{ post.id }}" class="btn color blue" >Like</button> -{{post.total_likes}} Likes
+    <button type="submit" name="post_id" value="{{ post.id }}" class="btn color blue" >Like</button> {{post.total_likes}} Likes
   </form>
   {% else %}
   <form action=" {% url 'unlike_post' post.id %}" method="POST">
     {% csrf_token %}
-    <button type="submit" name="post_id" value="{{ post.id }}" class="btn color red" >Like</button> -{{post.total_likes}} Likes
+    <button type="submit" name="post_id" value="{{ post.id }}" class="btn color red unlike" value="Like">Like</button> {{post.total_likes}} Likes
   </form>
   {% endif %}
   </br>
