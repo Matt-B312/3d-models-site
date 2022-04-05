@@ -137,7 +137,6 @@ model-viewer {
 /* Position the image container (needed to position the left and right arrows) */
 .container {
   position: relative;
-  
 }
 
 /* Hide the images by default */
@@ -224,9 +223,6 @@ model-viewer {
   opacity: 1;
 }
 
-
-
-
 .unlike:hover:before {
   content: "Un";
 }
@@ -241,3 +237,45 @@ model-viewer {
 /* .searchbar {
   visibility: hidden;
 } */
+
+/* matts edits */
+.colume-container {
+  height: 95px;
+  width: 100vw;
+}
+
+.scroll-container {
+  overflow-x: scroll;
+  max-width: 26.5vw;
+  margin: 0 auto;
+}
+
+.demo {
+  object-fit: cover;
+}
+img.responsive-img.card-panel {
+  margin-left: 0 auto;
+  margin-right: 0 auto;
+}
+
+img.responsive-img {
+  height: 150px;
+  width: 180px;
+  object-fit: cover;
+}
+/* Dylan edits below */
+.image-form {
+  background-color: rgba(240, 248, 255, 0) !important;
+}
+
+/* #id_password {
+  display: none;
+  color: rgba(240, 248, 255, 0);
+} */
+.center {
+  display: flex;
+  align-self: center;
+  align-content: center;
+  flex-direction: column;
+  align-items: center;
+}
