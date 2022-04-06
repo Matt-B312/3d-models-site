@@ -6,9 +6,37 @@
 
 {%endif%}
 
-<form action="{% url 'home' %}" method="POST">
-  {% csrf_token %} {{form.as_p}}
-  <input type="submit" value="Update Profile" class="btn" />
+<form action="" method="POST"> 
+  {% csrf_token %} 
+  
+  <div class="form-field">
+    {{form.username.errors}}
+    {{form.username.label_tag}}
+    {{form.username}}
+</div>
+<div class="form-field">
+    {{form.email.errors}}
+    {{form.email.label_tag}}
+    {{form.email}}
+</div>
+<div class="form-field">
+    {{account_form.picture.label_tag}}
+    {{account_form.picture}}
+</div>
+<div class="form-field">
+    {{form.password1.errors}}
+    {{form.password1.label_tag}}
+    {{form.password1}}
+</div>
+<div class="form-field">
+    {{form.password2.errors}}
+    {{form.password2.label_tag}}
+    {{form.password2}}
+</div>
+
+<br>
+
+  <input type="submit" value="Update Profile" id="form-button" class="btn btn-success btn-block" />
   <input type="hidden" name="text" value="{{next}}" />
 </form>
 
