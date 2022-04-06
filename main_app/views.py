@@ -168,7 +168,7 @@ def profile(request):
 
 
 
-def add_model(request, post_id,exception):
+def add_model(request, post_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('model', None)
     print("photo file test",photo_file)
@@ -194,7 +194,6 @@ def add_model(request, post_id,exception):
             # photo.save()
             post.save()
         except:
-            print('exception log:',exception)
             print('An error occurred uploading file to S3')
         
     
@@ -209,12 +208,12 @@ class PostCreate(LoginRequiredMixin, CreateView):
     success_url = '/main_app/templates/home.html'
     
     #overriding in child class
-    def form_valid(self, form,exception, *args,**kwargs, ):
+    def form_valid(self, form, *args,**kwargs, ):
         print("POST Test",self.request.POST)
         form = Post(title=self.request.POST.get('title'),text_content=self.request.POST.get('text_content'),tags=self.request.POST.get('tags') )
         form.user_id = self.request.user.id
         form.save()
-        add_model(self.request, form.id, exception)
+        add_model(self.request, form.id)
         post = Post.objects.get(id=form.id)
         print("post test",post.title)
         return HttpResponseRedirect(reverse('post_detail', args=[form.id]))
