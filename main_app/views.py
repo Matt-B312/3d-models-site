@@ -18,7 +18,6 @@ from .forms import EditProfileForm
 import uuid
 import boto3
 import os
-from dotenv import load_dotenv
 
 from django.db.models import Q
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -30,7 +29,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 # from .forms import UploadFileForm
 # from .forms import ModelFormWithFileField
-import os
+
 
 
 # Add these "constant" variables below the imports
@@ -55,7 +54,7 @@ def add_photo(request, post_id):
             photo = Photo(url=url, post_id=post_id)
             photo.save()
         except:
-            print('An error occurred uploading file to S3')
+            print('photo An error occurred uploading file to S3')
     return HttpResponseRedirect(reverse('post_detail', args=[post_id]))
     # return redirect('posts', post_id=post_id)
 
