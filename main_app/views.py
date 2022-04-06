@@ -164,6 +164,7 @@ def profile(request):
     # for post in posts:
     #     # print('post',post)
     #     pass
+    print('like count=',like_count)
     return render(request, 'registration/profile.html', {'profile_details':profile_details, 'like_count':like_count})
 
 
