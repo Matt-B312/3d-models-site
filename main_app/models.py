@@ -36,7 +36,7 @@ class Account(models.Model):
 
  
 
-##Post
+
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
