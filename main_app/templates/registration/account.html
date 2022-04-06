@@ -6,6 +6,8 @@
         <div class="media-body">
           <h2 class="account-heading">{{ user.username }}</h2>
           <p class="text-secondary">{{ user.email }}</p>
+
+          <a href="{% url 'profile_edit' %}">Edit Profile</a> 
         </div>
       </div>
       <!-- FORM HERE -->
