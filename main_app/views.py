@@ -86,6 +86,21 @@ def posts_index(request):
     return render(request, 'main_app/posts_index.html', {'post_list': post_list , 'posts': posts})
 
 
+def user_posts_index(request):
+    post_list = Post.objects.filter(user=request.user.id)
+    #infiniscroll test
+    page = request.GET.get('page', 1)
+    paginator = Paginator(post_list, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'main_app/user_posts_index.html', {'post_list': post_list , 'posts': posts})
+
+
+
 def signup(request):
     error_message = ''
     if request.method == 'POST':
@@ -120,8 +135,23 @@ def upload(request):
 
 @login_required
 def profile(request):
-    profile_details = Account.objects.all
-    return render(request, 'registration/profile.html', {'profile_details':profile_details})
+    profile_details = Account.objects.all()
+    like_count = 0
+    holder = request.user
+    # print("id - ",holder.username)
+    posts = Post.objects.filter(user=holder.id)
+    
+    for post in posts:
+        like_count += (post.likes.all().count())
+    
+    
+    
+   
+    
+    # for post in posts:
+    #     # print('post',post)
+    #     pass
+    return render(request, 'registration/profile.html', {'profile_details':profile_details, 'like_count':like_count})
 
 
 def add_model(request, post_id):
@@ -144,7 +174,7 @@ def add_model(request, post_id):
             # print("post test",post.model)
             # print("photo url",photo.url)
             post.model = photo.url
-            photo.save()
+            # photo.save()
             post.save()
         except:
             print('An error occurred uploading file to S3')
@@ -188,12 +218,15 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 #     model = Post
 def detail(request, pk):
     post = Post.objects.get(id=pk)
+    own_post = False
+    if post.user == request.user:
+        own_post = True
     if request.user in Post.objects.get(id=pk).likes.all():
         liked = True
     else:
         liked = False
     print(Post.objects.get(id=pk).likes.all())
-    return render(request,'main_app/post_detail.html',{'post': post, 'liked': liked})
+    return render(request,'main_app/post_detail.html',{'post': post, 'liked': liked, 'own_post': own_post})
 
 # class PostList(LoginRequiredMixin, ListView):
 #     model = Post
@@ -230,10 +263,30 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
 class CommentDelete(LoginRequiredMixin, DeleteView):
     model = Comment
     
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
+    
+    def render_to_response(self, context, **response_kwargs):
+        response_kwargs.setdefault('content_type', self.content_type)
+        return self.response_class(
+            request=self.request,
+            template=self.get_template_names(),
+            context=context,
+            using=self.template_engine,
+            **response_kwargs
+    )
 
+    
+    # def delete(self, request, *args, **kwargs):
+    #     obj = self.get_object()
+    #     messages.success(request, '{} was deleted'.format(obj.name))
+    #     return super(LampDelete, self).delete(request, *args, **kwargs)
+    
     def get_success_url(self):
-        print('self12',self.args)
-        return self.request.GET.get('next', reverse('post_detail', args=[self]))  
+        print('self',self.request)
+        return self.request.GET.get('next', reverse('posts_index')) 
     
 # def form_valid(self, form, *args,**kwargs):
 #         print("POST Test",self.request.POST)

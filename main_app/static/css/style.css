@@ -245,21 +245,28 @@ model-viewer {
 /* matts edits */
 .colume-container {
   height: 95px;
-  width: 670px;
+  width: 480px;
+  overflow: hidden;
 }
 
 .scroll-container {
-  overflow-x: scroll;
-  max-width: 26.5vw;
+  max-width: 480px;
   margin: 0 auto;
 }
 
 .demo {
-  object-fit: fill;
+  object-fit: contain;
 }
 img.responsive-img.card-panel {
   margin-left: 0 auto;
   margin-right: 0 auto;
+}
+.larger {
+  width: 110px !important;
+  height: 110px !important;
+  position: relative !important;
+  top: 55px !important;
+  margin-height: -100px;
 }
 
 img.responsive-img {
@@ -268,13 +275,16 @@ img.responsive-img {
   height: 300px;
   width: auto;
 }
+.below-nav {
+  height: 200px;
+}
 
 .mySlides img.responsive-img {
   max-height: 300px;
   min-height: 300px;
-  max-width: 600px;
-  min-width: 300px;
-  object-fit: fill;
+  max-width: 580px;
+  min-width: 500px;
+  object-fit: contain;
 }
 
 /* Dylan edits below */
@@ -311,4 +321,28 @@ img.icon {
   display: inline-block;
   position: relative;
   top: 10px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+.row .col.s6 {
+  margin-left: 0;
+}
+
+.media {
+  display: flex;
+  justify-content: center;
+}
+.transparent {
+  background-color: rgba(240, 248, 255, 0) !important;
+}
+
+.comment-box {
+  width: 500px;
 }
