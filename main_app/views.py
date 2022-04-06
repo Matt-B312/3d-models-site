@@ -169,7 +169,7 @@ def profile(request):
 
 
 
-def add_model(request, post_id, exception):
+def add_model(request, post_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('model', None)
     print("photo file test",photo_file)
@@ -183,16 +183,19 @@ def add_model(request, post_id, exception):
             s3.upload_fileobj(photo_file, BUCKET, key)
             # build the full url string
             url = f"{S3_LINK_URL}{key}"
+            print('url',url)
             # print("url test",url)
             photo = Photo(url=url, post_id=post_id)
+            print(photo)
             post = Post.objects.get(id=post_id)
+            print(post)
             # print("post test",post.model)
             # print("photo url",photo.url)
             post.model = photo.url
             # photo.save()
             post.save()
         except:
-            print('An error occurred uploading file to S3', exception)
+            print('An error occurred uploading file to S3')
         
     
     
