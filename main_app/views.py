@@ -4,13 +4,11 @@ from .models import Account, Comment, Post, Photo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views import generic
 from django.views.generic import ListView, DetailView, TemplateView
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, path
-from .forms import AccountCreate
-from .forms import EditProfileForm
+from .forms import AccountCreate,EditProfileForm, EditUserForm
 
 import uuid
 import boto3
@@ -89,7 +87,7 @@ def posts_index(request):
 def signup(request):
     error_message = ''
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = EditUserForm(request.POST)
         account_form = AccountCreate(request.POST)
         if form.is_valid():
             #save user to DB
@@ -102,7 +100,7 @@ def signup(request):
             return redirect('/')
         else:
             error_message = "Invalid Sign Up Submission - Try Again"
-    form = UserCreationForm()
+    form = EditUserForm()
     account_form = AccountCreate()
     context = {'form':form, 'error_message': error_message , 'account_form': account_form}
     return render(request, 'registration/signup.html', context)
@@ -118,10 +116,14 @@ def upload(request):
         })
     return render(request, 'upload.html')
 
-@login_required
-def profile(request):
-    profile_details = Account.objects.all
-    return render(request, 'registration/profile.html', {'profile_details':profile_details})
+# @login_required
+# def profile(request):
+#     profile_details = Account.objects.all()
+#     print("Hi There!!!",profile_details)
+#     return render(request, 'registration/profile.html', {'profile_details':profile_details})
+
+class ProfileDetail(LoginRequiredMixin, DetailView):
+    model = Account
 
 
 def add_model(request, post_id):

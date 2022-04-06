@@ -28,7 +28,7 @@ class Account(models.Model):
     # likes = models.ManyToManyField(Comment)
 
     def get_absolute_url(self):
-        return reverse('detail', kwargs = {'account_id': self.id})
+        return reverse('profile', kwargs = {'account_id': self.id})
     
     def __str__(self):
         return self.user.username
