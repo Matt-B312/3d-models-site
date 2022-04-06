@@ -10,6 +10,7 @@ urlpatterns = [
     #POSTs
     path('posts/create', views.PostCreate.as_view(), name="post_create"),
     path('posts', views.posts_index, name="posts_index"),
+    path('posts/user', views.user_posts_index, name="user_posts_index"),
     path('posts/<int:pk>/update/', views.PostUpdate.as_view(), name="post_update"),
     path('posts/<int:pk>/delete/', views.PostDelete.as_view(), name="post_delete"),
     path('posts/<int:pk>/', views.detail, name='post_detail'),
