@@ -23,8 +23,11 @@ from django.shortcuts import redirect, render
 #         return self.username
 
 class Account(models.Model):
-    picture = models.CharField(default='https://i.imgur.com/VKXouC4.png', blank=True, null=True, max_length=2000)
+
     # picture = models.FileField(blank=True, null=True, upload_to="models/accountImg", default="/media/models/accountImg/default.png" )
+
+    picture = models.CharField(default='https://i.imgur.com/pDEWNFJ.png', blank=True, null=True, max_length=2000)
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # likes = models.ManyToManyField(Comment)
 
@@ -45,7 +48,7 @@ class Post(models.Model):
     text_content = models.TextField(max_length=1000, default=None, blank=True, null=True)
     tags = models.TextField(max_length=1000, default=None, blank=True, null=True)
     downloads = models.IntegerField(default=0)
-    type = models.CharField(max_length=50, default="STL")
+    type = models.CharField(max_length=50, default="GLB")
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, related_name='likes')
     

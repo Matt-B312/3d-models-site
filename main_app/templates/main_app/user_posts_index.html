@@ -1,6 +1,11 @@
 {% extends "base.html"%} {% block content %}
 
-<h1>All Models</h1>
+<div class="center">
+  <span class="left"
+    ><img class="circle icon larger left" src="{{ user.account.picture }}"
+  /></span>
+  <h1>{{user.username}}'s Models</h1>
+</div>
 
 <div class="infinite-container">
   <div class="list">

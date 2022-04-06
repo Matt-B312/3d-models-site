@@ -7,9 +7,13 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+
 from django.urls import reverse, path
 from .forms import AccountCreate,EditProfileForm, EditUserForm
-from django.contrib.auth.forms import UserChangeForm
+
+from django.urls import reverse, path, reverse_lazy
+from .forms import AccountCreate
+from .forms import EditProfileForm
 
 import uuid
 import boto3
@@ -85,6 +89,21 @@ def posts_index(request):
     return render(request, 'main_app/posts_index.html', {'post_list': post_list , 'posts': posts})
 
 
+def user_posts_index(request):
+    post_list = Post.objects.filter(user=request.user.id)
+    #infiniscroll test
+    page = request.GET.get('page', 1)
+    paginator = Paginator(post_list, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'main_app/user_posts_index.html', {'post_list': post_list , 'posts': posts})
+
+
+
 def signup(request):
     error_message = ''
     if request.method == 'POST':
@@ -117,6 +136,7 @@ def upload(request):
         })
     return render(request, 'upload.html')
 
+
 # @login_required
 # def profile(request):
 #     profile_details = Account.objects.all()
@@ -125,6 +145,27 @@ def upload(request):
 
 class ProfileDetail(LoginRequiredMixin, DetailView):
     model = Account
+
+@login_required
+def profile(request):
+    profile_details = Account.objects.all()
+    like_count = 0
+    holder = request.user
+    # print("id - ",holder.username)
+    posts = Post.objects.filter(user=holder.id)
+    
+    for post in posts:
+        like_count += (post.likes.all().count())
+    
+    
+    
+   
+    
+    # for post in posts:
+    #     # print('post',post)
+    #     pass
+    return render(request, 'registration/profile.html', {'profile_details':profile_details, 'like_count':like_count})
+
 
 
 def add_model(request, post_id):
@@ -147,7 +188,7 @@ def add_model(request, post_id):
             # print("post test",post.model)
             # print("photo url",photo.url)
             post.model = photo.url
-            photo.save()
+            # photo.save()
             post.save()
         except:
             print('An error occurred uploading file to S3')
@@ -194,12 +235,15 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 #     model = Post
 def detail(request, pk):
     post = Post.objects.get(id=pk)
+    own_post = False
+    if post.user == request.user:
+        own_post = True
     if request.user in Post.objects.get(id=pk).likes.all():
         liked = True
     else:
         liked = False
     print(Post.objects.get(id=pk).likes.all())
-    return render(request,'main_app/post_detail.html',{'post': post, 'liked': liked})
+    return render(request,'main_app/post_detail.html',{'post': post, 'liked': liked, 'own_post': own_post})
 
 # class PostList(LoginRequiredMixin, ListView):
 #     model = Post
@@ -235,8 +279,42 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
     
 class CommentDelete(LoginRequiredMixin, DeleteView):
     model = Comment
+    
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
+    
+    def render_to_response(self, context, **response_kwargs):
+        response_kwargs.setdefault('content_type', self.content_type)
+        return self.response_class(
+            request=self.request,
+            template=self.get_template_names(),
+            context=context,
+            using=self.template_engine,
+            **response_kwargs
+    )
+
+    
+    # def delete(self, request, *args, **kwargs):
+    #     obj = self.get_object()
+    #     messages.success(request, '{} was deleted'.format(obj.name))
+    #     return super(LampDelete, self).delete(request, *args, **kwargs)
+    
     def get_success_url(self):
-        return self.request.GET.get('next', reverse('home'))  
+        print('self',self.request)
+        return self.request.GET.get('next', reverse('posts_index')) 
+    
+# def form_valid(self, form, *args,**kwargs):
+#         print("POST Test",self.request.POST)
+#         form = Post(title=self.request.POST.get('title'),text_content=self.request.POST.get('text_content'),tags=self.request.POST.get('tags') )
+#         form.user_id = self.request.user.id
+#         form.save()
+#         add_model(self.request, form.id)
+#         post = Post.objects.get(id=form.id)
+#         print("post test",post.title)
+#         return HttpResponseRedirect(reverse('post_detail', args=[form.id]))
+    
 
 def LikeView(request, pk):
     print("POST", Post)
@@ -256,7 +334,7 @@ def UnlikeView(request, pk):
 def SearchPost(request):
     if request.method == "POST":
         searched = request.POST['searched']
-        posts = Post.objects.filter(Q(tags__contains=searched)| Q(title__contains=searched))
+        posts = Post.objects.filter(Q(tags__icontains=searched)| Q(title__icontains=searched))
         return render(request, 'main_app/post_search.html', {'searched': searched, 'posts': posts})
     else:
         return render(request, 'main_app/post_search.html', {})
