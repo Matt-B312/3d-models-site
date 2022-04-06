@@ -40,6 +40,6 @@ urlpatterns = [
 
     # path('upload/', views.upload, name='upload'),
     
-    path('profile/<int:pk>', views.ProfileDetail.as_view(), name='profile'),
+    path('profile/', views.profile, name='profile'),
     
     ]   

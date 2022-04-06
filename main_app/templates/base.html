@@ -87,12 +87,12 @@
                   </form>
                 </div>
                 <li>
-                  <a href="{% url 'profile' user.id %}"
+                  <a href="{% url 'profile' %}"
                     ><img class="circle icon" src="{{ user.account.picture }}"
                   /></a>
                 </li>
                 <li>
-                  <a href="{% url 'profile' user.id %}">{{user.username}}</a>
+                  <a href="{% url 'profile' %}">{{user.username}}</a>
                 </li>
                 <li><a href="{% url 'logout' %}">Log Out</a></li>
 
