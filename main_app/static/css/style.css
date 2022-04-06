@@ -346,3 +346,14 @@ img.icon {
 .comment-box {
   width: 500px;
 }
+
+.post-text {
+  word-wrap: break-word;
+  width: 650px;
+}
+
+.list-card {
+  width: 360px;
+
+  text-orientation: center;
+}
