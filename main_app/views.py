@@ -169,7 +169,7 @@ def profile(request):
 
 
 
-def add_model(request, post_id):
+def add_model(request, post_id, exception):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('model', None)
     print("photo file test",photo_file)
@@ -192,7 +192,7 @@ def add_model(request, post_id):
             # photo.save()
             post.save()
         except:
-            print('An error occurred uploading file to S3')
+            print('An error occurred uploading file to S3', exception)
         
     
     
