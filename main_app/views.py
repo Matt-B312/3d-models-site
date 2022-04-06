@@ -121,6 +121,11 @@ def upload(request):
 @login_required
 def profile(request):
     profile_details = Account.objects.all
+    like_count = 0
+    holder = request.user
+    print("id - ",holder.id)
+    for post in Post.objects(id=request.user.id):
+        pass
     return render(request, 'registration/profile.html', {'profile_details':profile_details})
 
 
@@ -230,10 +235,30 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
 class CommentDelete(LoginRequiredMixin, DeleteView):
     model = Comment
     
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
+    
+    def render_to_response(self, context, **response_kwargs):
+        response_kwargs.setdefault('content_type', self.content_type)
+        return self.response_class(
+            request=self.request,
+            template=self.get_template_names(),
+            context=context,
+            using=self.template_engine,
+            **response_kwargs
+    )
 
+    
+    # def delete(self, request, *args, **kwargs):
+    #     obj = self.get_object()
+    #     messages.success(request, '{} was deleted'.format(obj.name))
+    #     return super(LampDelete, self).delete(request, *args, **kwargs)
+    
     def get_success_url(self):
-        print('self12',self.args)
-        return self.request.GET.get('next', reverse('post_detail', args=[self]))  
+        print('self',self.request)
+        return self.request.GET.get('next', reverse('posts_index')) 
     
 # def form_valid(self, form, *args,**kwargs):
 #         print("POST Test",self.request.POST)
