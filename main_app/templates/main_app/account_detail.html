@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block title %}Profile Page{% endblock title %}
+{%block content %}
+<div class="row my-3 p-3">
+  <h1>Profile Info</h1>
+</div>
+<div class="content-section">
+  <div class="media">
+    <img class="circle account-img" src="{{ user.account.picture }}" />
+    <div class="media-body">
+      <h2 class="account-heading">Welcome {{ user.username }}</h2>
+      <p class="text-secondary">{{ user.email }}</p>
+      Like Count:{{like_count}}
+    </div>
+
+    <div class="content-section">
+        <div class="media">
+          <img class="circle account-img" src="{{ account.picture }}">
+          <div class="media-body">
+            <h2 class="account-heading">welcome {{ user.username }}</h2>
+            <p class="text-secondary">{{ user.email }}</p>
+          </div>
+        </div>
+        <!-- FORM HERE -->
+        
+      </div>
+
+
+{% endblock content %}
