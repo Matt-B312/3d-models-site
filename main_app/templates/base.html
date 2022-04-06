@@ -60,6 +60,11 @@
               <li>
                 <a href="{%url 'posts_index' %}">Models</a>
               </li>
+
+              <li><a href="{% url 'logout' %}">Log Out</a></li>
+
+              {%else%}
+
               <li>
                 <a href="{%url 'user_posts_index' %}">My Models</a>
               </li>
@@ -86,10 +91,13 @@
                     </div>
                   </form>
                 </div>
+                {%endif%} {% if user.is_authenticated %}
                 <li>
                   <img class="circle icon" src="{{ user.account.picture }}" />
                 </li>
-                <li><a href="{% url 'profile' %}">{{user.username}}</a></li>
+                <li>
+                  <a href="{% url 'profile' user.id %}">{{user.username}}</a>
+                </li>
                 <li><a href="{% url 'logout' %}">Log Out</a></li>
 
                 {%else%}

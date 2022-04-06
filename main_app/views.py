@@ -4,10 +4,13 @@ from .models import Account, Comment, Post, Photo
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views import generic
 from django.views.generic import ListView, DetailView, TemplateView
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.urls import reverse, path
+from .forms import AccountCreate,EditProfileForm, EditUserForm
+
 from django.urls import reverse, path, reverse_lazy
 from .forms import AccountCreate
 from .forms import EditProfileForm
@@ -104,7 +107,7 @@ def user_posts_index(request):
 def signup(request):
     error_message = ''
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = EditUserForm(request.POST)
         account_form = AccountCreate(request.POST)
         if form.is_valid():
             #save user to DB
@@ -117,7 +120,7 @@ def signup(request):
             return redirect('/')
         else:
             error_message = "Invalid Sign Up Submission - Try Again"
-    form = UserCreationForm()
+    form = EditUserForm()
     account_form = AccountCreate()
     context = {'form':form, 'error_message': error_message , 'account_form': account_form}
     return render(request, 'registration/signup.html', context)
@@ -132,6 +135,16 @@ def upload(request):
             'uploaded_file_url': uploaded_file_url
         })
     return render(request, 'upload.html')
+
+
+# @login_required
+# def profile(request):
+#     profile_details = Account.objects.all()
+#     print("Hi There!!!",profile_details)
+#     return render(request, 'registration/profile.html', {'profile_details':profile_details})
+
+class ProfileDetail(LoginRequiredMixin, DetailView):
+    model = Account
 
 @login_required
 def profile(request):
@@ -152,6 +165,7 @@ def profile(request):
     #     # print('post',post)
     #     pass
     return render(request, 'registration/profile.html', {'profile_details':profile_details, 'like_count':like_count})
+
 
 
 def add_model(request, post_id):
@@ -180,6 +194,9 @@ def add_model(request, post_id):
             print('An error occurred uploading file to S3')
         
     
+    
+
+            
 
 class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
@@ -327,21 +344,32 @@ class UserEditView(generic.CreateView):
     template = 'registration/edit_profile.html'
     success_url = '/home' 
 
+
+
 def edit_profile(request):
     error_message = ''
     if request.method == 'POST':
-        form = EditProfileForm(request.POST, instance=request.user)
+        form = EditUserForm(data=request.POST, instance=request.user)
+        account_instance = get_object_or_404(Account, user=request.user)
+        account_form = AccountCreate(request.POST or None, request.FILES or None, instance=account_instance)
         if form.is_valid():
             #save user to DB
-            Account.objects.update(user=request.user)
-            form.save()
-            return redirect('/home/')
+            user = form.save()
+            account = account_form.save(commit=False)
+            account = account_form.save()
+            print("HELLO",account)
+            account.user = user
+            login(request, user)
+            
+            return redirect('/')
         
         else:
             error_message = "Invalid Edit Submission - Try Again"
-    form = EditProfileForm(instance=request.user)
-    context = {'form':form, 'error_message': error_message}
+    form = EditUserForm(instance=request.user)
+    account_form = AccountCreate(instance=request.user)
+    context = {'form':form, 'error_message': error_message, 'account_form': account_form}
     return render(request, 'registration/edit_profile.html', context)
+
 
 # def signup(request):
 #     error_message = ''
