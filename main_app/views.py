@@ -229,20 +229,11 @@ class CommentUpdate(LoginRequiredMixin, UpdateView):
     
 class CommentDelete(LoginRequiredMixin, DeleteView):
     model = Comment
-    def get_success_url(self, **kwargs):
-        return reverse_lazy('post_detail', self.post.id)
-    def delete(self, request, *args, **kwargs):
-        self.book_pk = self.get_object().post.id
-        return super(CommentDelete, self).delete(request, *args, **kwargs)
     
-            
-    
-    # def get_success_url(self):
-    #     comment = Comment.objects.get(id=self.id)
-    #     print('comment test', comment)
-    #     post = Post.objects.get(id=comment.id)
-    #     print('post test', post)
-    #     return self.request.GET.get('next', reverse('home'))  
+
+    def get_success_url(self):
+        print('self12',self.args)
+        return self.request.GET.get('next', reverse('post_detail', args=[self]))  
     
 # def form_valid(self, form, *args,**kwargs):
 #         print("POST Test",self.request.POST)

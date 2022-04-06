@@ -121,7 +121,7 @@ model-viewer {
   display: inline-block;
   position: relative;
   left: 150px;
-  top: 15px;
+  top: 10px;
 }
 
 .detail-thumbnail model-viewer {
