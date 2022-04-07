@@ -64,12 +64,11 @@
                 >Details</a
               >
             </div>
-
           </div>
         </div>
       </div>
     </div>
-    <p class="hidden">Tags{{post.tags}}</p>
+    <p class="hidden">Tags: {{post.tags}}</p>
     {%endfor%}
   </div>
 </div>
@@ -78,12 +77,6 @@
   class="infinite-more-link btn center"
   href="?page={{ posts.next_page_number }}"
   >More Models</a
->
-{% endif %} {% if posts.has_previous %}
-<a
-  class="infinite-more-link btn center"
-  href="?page={{ posts.previous_page_number }}"
-  >Previous Page</a
 >
 {% endif %}
 
