@@ -70,27 +70,29 @@
      
         <br>
           <p class="hidden">Tags: {{post.tags}}</p>
-
-        <div class="post-text">
-          <p>{{post.text_content}}</p>
-          
-          <a href="{{post.model}}"><input type="button" value="Download" class="btn"></a>
-          
-          {% if not liked %}
-          <form class="transparent" action=" {% url 'like_post' post.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" name="post_id" value="{{ post.id }}" class="btn color blue" >Like</button> {{post.total_likes}} Likes
-          </form>
-          {% else %}
-          <form action=" {% url 'unlike_post' post.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" name="post_id" value="{{ post.id }}" class="btn color red unlike" value="Like">Like</button> {{post.total_likes}} Likes
-          </form>
-          {% endif %}
-          <p>Download Count: {{post.downloads}}</p>
-          <p>{{account.name}}</p>
+        <div class="details">
+          <div class="post-text">
+            <p>{{post.text_content}}</p>
           </div>
-        
+          <div class="buttons">  
+            <a href="{{post.model}}"><input type="button" value="Download" class="btn"></a>
+            
+            {% if not liked %}
+            <form class="transparent" action=" {% url 'like_post' post.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" name="post_id" value="{{ post.id }}" class="btn color blue" >Like</button> {{post.total_likes}} Likes
+            </form>
+            {% else %}
+            <form action=" {% url 'unlike_post' post.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" name="post_id" value="{{ post.id }}" class="btn color red unlike" value="Like">Like</button> {{post.total_likes}} Likes
+            </form>
+            {% endif %}
+            <p>Download Count: {{post.downloads}}</p>
+            <p>Uploaded By:{{post.account.name}}</p>
+            
+          </div>
+        </div>
         {% comment %} <div>
           <a href="{% url 'comment_create' post.id %}">Add Comment</a>
         </div> {% endcomment %}

@@ -266,7 +266,6 @@ img.responsive-img.card-panel {
   height: 110px !important;
   position: relative !important;
   top: 55px !important;
-  margin-height: -100px;
 }
 
 img.responsive-img {
@@ -356,4 +355,15 @@ img.icon {
   width: 360px;
 
   text-orientation: center;
+}
+.details {
+  display: flex;
+  flex-direction: row;
+}
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
+.post-text {
+  width: 420px;
 }
