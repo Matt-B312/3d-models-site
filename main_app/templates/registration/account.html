@@ -3,11 +3,12 @@
     <div class="content-section">
       <div class="media">
         <img class="rounded-circle account-img" src="{{ user.account.image.url }}">
+        <br>
+        <a href="{% url 'edit_profile' %}" class='btn'>Edit Profile</a> 
         <div class="media-body">
           <h2 class="account-heading">{{ user.username }}</h2>
           <p class="text-secondary">{{ user.email }}</p>
-          <br>
-          <a href="{% url 'edit_profile' %}" class='btn'>Edit Profile</a> 
+          
           
         </div>
       </div>
