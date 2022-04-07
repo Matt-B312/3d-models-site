@@ -191,7 +191,7 @@ def signup(request):
     if request.method == 'POST':
         form = EditUserForm(request.POST)
         
-        account_pic = request.FILES.get('picture')
+        account_pic = request.FILES.get('picture', None)
         print("photo file test",account_pic)
         if account_pic:
             s3 = boto3.client('s3')
@@ -204,7 +204,7 @@ def signup(request):
             # build the full url string
             url = f"{S3_LINK_URL}{key}"
             print('url',url)
-            account_form = AccountCreate(request.POST)
+            account_form = AccountCreate(request.POST, initial={'picture':"/media/models/accountImg/default.png"})
             if form.is_valid():
                 print("accountForm", account_form)
                 #save user to DB
