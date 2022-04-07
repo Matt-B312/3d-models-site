@@ -103,6 +103,7 @@ DATABASES = {
         'NAME': 'models_site',
         # 'USER': '',
         # 'PASSWORD': ''
+        
 }
 }
 
