@@ -70,7 +70,7 @@
             <ul class="right hide-on-med-and-down nowrap">
               <div class="right-nav">
               {%endif%}
-                <div class="left">
+                <li>
                   <form
                     class="searchbar left"
                     method="post"
@@ -88,7 +88,7 @@
                       />
                     </div>
                   </form>
-                </div>
+                </li>
                 {% if user.is_authenticated %}
                 <li>
                   <a href="{% url 'profile' %}"
