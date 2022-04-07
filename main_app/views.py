@@ -77,8 +77,9 @@ def posts_index(request, sort="like_sort"):
     post_list = Post.objects.all()
     for post in post_list: 
         post.like_count = len(post.likes.all())
+        print("like counter",post.like_count)
     
-    like_sort = sorted(int(post_list['like_count']))
+    like_sort = sorted(post_list['like_count'])
     print('like-sort test',like_sort)
     
     # likes_sort = sorted(post_list, key=likes filter()
