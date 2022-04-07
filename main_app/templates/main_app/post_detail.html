@@ -42,10 +42,11 @@
               <img class="responsive-img card-panel" src="{{photo.url}}">
             </div>
             {% empty %}
-            
+            {% if own_post %}
             <div class="card-panel teal-text center-align">
               No Photos Uploaded
             </div>
+            {%endif%}
             {% endfor %}
           
             <!-- Next and previous buttons -->
