@@ -27,8 +27,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-# from .forms import UploadFileForm
-# from .forms import ModelFormWithFileField
+
 
 
 
@@ -136,12 +135,6 @@ def upload(request):
     return render(request, 'upload.html')
 
 
-# @login_required
-# def profile(request):
-#     profile_details = Account.objects.all()
-#     print("Hi There!!!",profile_details)
-#     return render(request, 'registration/profile.html', {'profile_details':profile_details})
-
 class ProfileDetail(LoginRequiredMixin, DetailView):
     model = Account
 
@@ -152,19 +145,12 @@ def profile(request):
     holder = request.user
     # print("id - ",holder.username)
     posts = Post.objects.filter(user=holder.id)
+    post_count =  len(posts)
     
     for post in posts:
         like_count += (post.likes.all().count())
-    
-    
-    
-   
-    
-    # for post in posts:
-    #     # print('post',post)
-    #     pass
-    print('like count=',like_count)
-    return render(request, 'registration/profile.html', {'profile_details':profile_details, 'like_count':like_count})
+
+    return render(request, 'registration/profile.html', {'profile_details':profile_details, 'like_count':like_count, 'post_count':post_count})
 
 
 
@@ -298,26 +284,12 @@ class CommentDelete(LoginRequiredMixin, DeleteView):
             **response_kwargs
     )
 
-    
-    # def delete(self, request, *args, **kwargs):
-    #     obj = self.get_object()
-    #     messages.success(request, '{} was deleted'.format(obj.name))
-    #     return super(LampDelete, self).delete(request, *args, **kwargs)
-    
+
     def get_success_url(self):
         print('self',self.request)
         return self.request.GET.get('next', reverse('posts_index')) 
     
-# def form_valid(self, form, *args,**kwargs):
-#         print("POST Test",self.request.POST)
-#         form = Post(title=self.request.POST.get('title'),text_content=self.request.POST.get('text_content'),tags=self.request.POST.get('tags') )
-#         form.user_id = self.request.user.id
-#         form.save()
-#         add_model(self.request, form.id)
-#         post = Post.objects.get(id=form.id)
-#         print("post test",post.title)
-#         return HttpResponseRedirect(reverse('post_detail', args=[form.id]))
-    
+
 
 def LikeView(request, pk):
     print("POST", Post)

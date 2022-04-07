@@ -48,16 +48,23 @@
             {% empty %} {% endfor %}
           </div>
           <p class="list-card">{{post.text_content}}</p>
-          <p>
-            Uploaded By:{{post.user.username}}
-            <img
-              class="responsive-img icon"
-              src="{{post.user.account.picture}}"
-            />
-          </p>
-          <p>Download Count: {{post.downloads}}</p>
-          <p>{{account.name}}</p>
-          <p class="hidden">Tags{{post.tags}}</p>
+          <div class="list-bottom">
+            <div class="bottom-left">
+              <p>
+                Uploaded By: {{post.user.username}}
+                <img
+                  class="responsive-img icon"
+                  src="{{post.user.account.picture}}"
+                />
+              </p>
+              <p>Download Count: {{post.downloads}}</p>
+            </div>
+            <div class="bottom-right">
+              <a class="btn" href="{% url 'post_detail' post.id %}">Details</a>
+            </div>
+
+            <p class="hidden">Tags{{post.tags}}</p>
+          </div>
         </div>
       </div>
     </div>
