@@ -122,6 +122,7 @@ def signup(request):
                 print('url',url)
                 account_form = AccountCreate(request.POST)
                 if form.is_valid():
+                    print("accountForm", account_form)
                     #save user to DB
                     user = form.save()
                     account = account_form.save(commit=False)
