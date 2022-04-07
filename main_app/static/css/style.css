@@ -418,4 +418,6 @@ img.icon {
   justify-content: space-between;
 }
 
-
+.bottom-left {
+  margin: 0 auto;
+}
