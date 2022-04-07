@@ -8,15 +8,7 @@
 
 <form action="{% url 'signup' %}" method="POST"  enctype="multipart/form-data">
 {% csrf_token %}
-    {% comment %} <input type="submit" value="Sign Up" class="btn" />
-  <input type="hidden" name="text" value="{{next}}" />
-</form> {% endcomment %}
 
-
-{% comment %} <div class="form-field">
-    {{account_form.name.label_tag}}
-    {{account_form.name}}
-</div> {% endcomment %}
 
 <div class="form-field">
     {{form.username.errors}}

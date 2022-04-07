@@ -106,18 +106,38 @@ def signup(request):
     error_message = ''
     if request.method == 'POST':
         form = EditUserForm(request.POST)
-        account_form = AccountCreate(request.POST)
-        if form.is_valid():
-            #save user to DB
-            user = form.save()
-            account = account_form.save(commit=False)
-            account.user = user
-            #login the user
-            login(request, user)
-            Account.objects.create(user=request.user)
-            return redirect('/')
-        else:
-            error_message = "Invalid Sign Up Submission - Try Again"
+        
+        account_pic = request.FILES.get('picture', None)
+        print("photo file test",account_pic)
+        if account_pic:
+            s3 = boto3.client('s3')
+            # need a unique "key" for S3 / needs image file extension too
+            key = uuid.uuid4().hex[:6] + account_pic.name[account_pic.name.rfind('.'):]
+            print("key test", key)
+            # just in case something goes wrong
+            try:
+                s3.upload_fileobj(account_pic, BUCKET, key)
+                # build the full url string
+                url = f"{S3_LINK_URL}{key}"
+                print('url',url)
+                account_form = AccountCreate(request.POST)
+                if form.is_valid():
+                    #save user to DB
+                    user = form.save()
+                    account = account_form.save(commit=False)
+                    account.user = user
+                    account.picture = url
+                    #login the user
+                    login(request, user)
+                    Account.objects.create(user=request.user)
+                    return redirect('/')
+                else:
+                    error_message = "Invalid Sign Up Submission - Try Again"
+
+            except:
+               print('An error occurred uploading file to S3')
+        
+        
     form = EditUserForm()
     account_form = AccountCreate()
     context = {'form':form, 'error_message': error_message , 'account_form': account_form}
