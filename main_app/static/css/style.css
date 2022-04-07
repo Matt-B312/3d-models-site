@@ -109,6 +109,10 @@ model-viewer {
   --progress-bar-color: none;
 }
 
+.earth {
+  margin-bottom: -75px;
+}
+
 .earth model-viewer {
   width: 700px;
   height: 700px;
@@ -328,7 +332,6 @@ img.alt-icon {
   height: 45px;
   margin: 0 auto;
   display: inline-block;
-
 }
 
 .hidden {
@@ -441,4 +444,18 @@ img.alt-icon {
 
 a {
   color: black;
+}
+
+select {
+  display: block;
+}
+
+.sorter {
+  height: auto;
+  width: 150px;
+  margin-right: 50px;
+}
+
+.index-h1 {
+  margin-bottom: -20px;
 }

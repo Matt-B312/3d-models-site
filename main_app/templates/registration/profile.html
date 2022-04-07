@@ -18,5 +18,82 @@
   </div>
   <!-- FORM HERE -->
 </div>
+<div class="infinite-container">
+  <div class="list">
+    {% for post in posts%}
+    <div class="card home-card">
+      <div class="card-content home-card">
+        <div class="card-content home-card">
+          <a href="{% url 'post_detail' post.id %}">
+            <span class="card-title">{{post.title}}</span>
+          </a>
+
+          <!-- Insert photo markup below this comment -->
+          <div class="thumbnail">
+            <model-viewer
+              bounds="tight"
+              enable-pan
+              src="{{post.model}}"
+              ar
+              disable-zoom
+              ar-modes="webxr scene-viewer quick-look"
+              camera-controls
+              environment-image="/media/models/sunrise.hdr"
+              poster="{{post.model}}"
+              seamless-poster
+              shadow-intensity="1"
+              auto-rotate
+              interaction-prompt-threshold="15000000"
+            >
+              <div class="progress-bar hide" slot="progress-bar">
+                <div class="update-bar"></div>
+              </div>
+              <button slot="ar-button" id="ar-button">VR View</button>
+            </model-viewer>
+          </div>
+          <div class="gallery list-gallery">
+            {% for photo in post.photo_set.all %}
+            <img class="responsive-img card-panel" src="{{photo.url}}" />
+            {% empty %} {% endfor %}
+          </div>
+          <p class="list-card">{{post.text_content}}</p>
+          <div class="list-bottom">
+            <div class="bottom-left">
+              <p>
+                Uploaded By: {{post.user.username}}
+                <img
+                  class="responsive-img icon"
+                  src="{{post.user.account.picture}}"
+                />
+              </p>
+              <p>Download Count: {{post.downloads}}</p>
+            </div>
+            <div class="bottom-right">
+              <a class="btn center" href="{% url 'post_detail' post.id %}"
+                >Details</a
+              >
+            </div>
+          </div>
+        </div>
+        <p class="hidden">Tags: {{post.tags}}</p>
+      </div>
+    </div>
+
+    {%endfor%}
+  </div>
+</div>
+{% if posts.has_next %}
+<a
+  class="infinite-more-link btn center"
+  href="?page={{ posts.next_page_number }}"
+  >More Models</a
+>
+{% endif %}
+
+<script>
+  var infinite = new Waypoint.Infinite({
+    element: $(".infinite-container")[0],
+  });
+</script>
 
 {% endblock content %}
