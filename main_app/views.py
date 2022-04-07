@@ -128,7 +128,7 @@ def signup(request):
                     account = account_form.save(commit=False)
                     account.user = user
                     account.picture = url
-                    print('AccountURL:', account.url)
+                    print('AccountURL:', account.picture)
                     account.save()
                     #login the user
                     login(request, user)
