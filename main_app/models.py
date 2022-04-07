@@ -70,7 +70,7 @@ class Post(models.Model):
 ## Comment
 class Comment(models.Model):
     #username = models.CharField(max_length=200, default=None, blank=True)
-    images = models.CharField(max_length=2000, default=None, blank=True, null=True)
+    # images = models.CharField(max_length=2000, default=None, blank=True, null=True)
     text_content = models.CharField(max_length=3000)
     title = models.CharField(max_length=100)
     # post = models.ForeignKey(Post, on_delete=models.CASCADE,blank=True, null=True)

@@ -242,7 +242,7 @@ def detail(request, pk):
 class CommentCreate(LoginRequiredMixin, CreateView):
     model = Comment
     # fields = '__all__'
-    fields = ['title','images','text_content']
+    fields = ['title','text_content']
     
     def get_initial(self):
         initial = {}
@@ -251,20 +251,28 @@ class CommentCreate(LoginRequiredMixin, CreateView):
         print("initial test",initial)
         return initial
     
+    def form_valid(self, form, *args,**kwargs, ):
+        # print("POST Test",self.request.POST)
+        form = Comment(title=self.request.POST.get('title'),text_content=self.request.POST.get('text_content'))
+        form.user_id = self.request.user.id
+        form.instance.post_id = self.kwargs.get('pk')
+        form.save()
+        # comment = Comment.objects.get(id=form.id)
+        return HttpResponseRedirect(reverse('post_detail', args=[form.instance.post_id]))
     
     #overriding in child class
-    def form_valid(self, form):
-        # comment = form.save(commit=False)
-        # comment.post = 
-        form.instance.post_id = self.kwargs.get('pk')
-        # print("HELLO:", form.instance.post_id)
-        # print("HI THERE:", self.kwargs.get('pk'))
-        return super(CommentCreate, self).form_valid(form)
+    # def form_valid(self, form):
+    #     # comment = form.save(commit=False)
+    #     # comment.post = 
+    #     form.instance.post_id = self.kwargs.get('pk')
+    #     # print("HELLO:", form.instance.post_id)
+    #     # print("HI THERE:", self.kwargs.get('pk'))
+    #     return super(CommentCreate, self).form_valid(form)
     
     
 class CommentUpdate(LoginRequiredMixin, UpdateView):
     model = Comment
-    fields = ['title','images','text_content']
+    fields = ['title','text_content']
     
 class CommentDelete(LoginRequiredMixin, DeleteView):
     model = Comment
