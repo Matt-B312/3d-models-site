@@ -73,11 +73,13 @@ def home(request):
     return render(request, 'home.html', {'post_list': post_list , 'posts': posts})
 
 
-def posts_index(request):
+def posts_index(request, sort="like_sort"):
     post_list = Post.objects.all()
     for post in post_list: 
         post.like_count = len(post.likes.all())
-        print("post - like count test",post.like_count)
+    
+    like_sort = sorted(post_list, key=post['like_count'])
+    print('like-sort test',like_sort)
     
     # likes_sort = sorted(post_list, key=likes filter()
     # sorted(list, key=..., reverse=...)
