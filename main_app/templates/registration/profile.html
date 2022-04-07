@@ -9,8 +9,8 @@
     <div class="media-body">
       <h2 class="account-heading">Welcome {{ user.username }}</h2>
       <p class="text-secondary">{{ user.email }}</p>
-      Like Count: {{like_count}}
-      Model Count: {{post_count}}
+      <p>Like Count: {{like_count}}</p>
+      <p>Model Count: {{post_count}}</p>
       <p>Member Since {{user.date_joined}}</p>
       <br /><br />
       <a href="{% url 'edit_profile' %}" class="btn">Edit Profile</a>

@@ -415,6 +415,7 @@ img.icon {
 .list-bottom {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 
