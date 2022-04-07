@@ -192,6 +192,7 @@ def signup(request):
         form = EditUserForm(request.POST)
         
         account_pic = request.FILES.get('picture', None)
+        
         print("photo file test",account_pic)
         if account_pic:
             s3 = boto3.client('s3')
@@ -222,8 +223,21 @@ def signup(request):
                 error_message = "Invalid Sign Up Submission - Try Again"
 
             # except:
-            #    print('An error occurred uploading file to S3')
-        
+        else:    #    print('An error occurred uploading file to S3')
+            account_form = AccountCreate(request.POST)
+            if form.is_valid():
+                print("accountForm", account_form)
+                #save user to DB
+                user = form.save()
+                account = account_form.save(commit=False)
+                account.user = user
+                account.picture = "/media/models/accountImg/default.png"
+                print('AccountURL:', account.picture)
+                account.save()
+                #login the user
+                login(request, user)
+                # Account.objects.create(user=request.user)
+                return redirect('/')
         
     form = EditUserForm()
     account_form = AccountCreate()
