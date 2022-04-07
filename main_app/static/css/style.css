@@ -411,3 +411,10 @@ img.icon {
 .card .card-title a:link {
   text-decoration: none;
 }
+
+.list-bottom {
+  display: flex;
+  flex-direction: row;
+}
+
+

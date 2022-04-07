@@ -60,7 +60,9 @@
               <p>Download Count: {{post.downloads}}</p>
             </div>
             <div class="bottom-right">
-              <a class="btn" href="{% url 'post_detail' post.id %}">Details</a>
+              <a class="btn center" href="{% url 'post_detail' post.id %}"
+                >Details</a
+              >
             </div>
 
             <p class="hidden">Tags{{post.tags}}</p>
