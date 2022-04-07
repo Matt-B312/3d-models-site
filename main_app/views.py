@@ -326,20 +326,45 @@ def edit_profile(request):
     if request.method == 'POST':
         form = EditUserForm(data=request.POST, instance=request.user)
         account_instance = get_object_or_404(Account, user=request.user)
-        account_form = AccountCreate(request.POST or None, request.FILES or None, instance=account_instance)
-        if form.is_valid():
-            #save user to DB
-            user = form.save()
-            account = account_form.save(commit=False)
-            account = account_form.save()
-            print("HELLO",account)
-            account.user = user
-            login(request, user)
-            
-            return redirect('/')
         
-        else:
-            error_message = "Invalid Edit Submission - Try Again"
+        account_pic = request.FILES.get('picture', None)
+        print("photo file test",account_pic)
+        if account_pic:
+            s3 = boto3.client('s3')
+            # need a unique "key" for S3 / needs image file extension too
+            key = uuid.uuid4().hex[:6] + account_pic.name[account_pic.name.rfind('.'):]
+            print("key test", key)
+            # just in case something goes wrong
+            try:
+                s3.upload_fileobj(account_pic, BUCKET, key)
+                # build the full url string
+                url = f"{S3_LINK_URL}{key}"
+                print('url',url)
+                account_instance.picture = url
+                
+                account_form = AccountCreate(request.POST or None, request.FILES or None, instance=account_instance)
+                if form.is_valid():
+                    print("accountForm", account_form)
+                    #save user to DB
+                    user = form.save()
+                    account = account_form.save(commit=False)
+                    print("I AM HERE")
+                    # account_form.save()
+                    # account = account_form.save()
+                    print("ACCOUNT", account.picture)
+                    account.user = user
+                    account.picture = url
+                    account.save()
+                    print("HELLO",account.picture)
+                    login(request, user)
+                    
+                    return redirect('/')
+                
+                else:
+                    error_message = "Invalid Edit Submission - Try Again"
+                        
+            except:
+                print('An error occurred uploading file to S3')
     form = EditUserForm(instance=request.user)
     account_form = AccountCreate(instance=request.user)
     context = {'form':form, 'error_message': error_message, 'account_form': account_form}
