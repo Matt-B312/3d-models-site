@@ -48,9 +48,16 @@
             {% empty %} {% endfor %}
           </div>
           <p class="list-card">{{post.text_content}}</p>
-          <p>Tags: {{post.tags}}</p>
+          <p>
+            Uploaded By:{{post.user.username}}
+            <img
+              class="responsive-img icon"
+              src="{{post.user.account.picture}}"
+            />
+          </p>
           <p>Download Count: {{post.downloads}}</p>
           <p>{{account.name}}</p>
+          <p class="hidden">Tags{{post.tags}}</p>
         </div>
       </div>
     </div>
