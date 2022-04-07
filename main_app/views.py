@@ -204,7 +204,8 @@ def signup(request):
             # build the full url string
             url = f"{S3_LINK_URL}{key}"
             print('url',url)
-            account_form = AccountCreate(request.POST, initial={'picture':"/media/models/accountImg/default.png"})
+            account_form = AccountCreate(request.POST)
+            account_form.fields['picture'].initial = "/media/models/accountImg/default.png"
             if form.is_valid():
                 print("accountForm", account_form)
                 #save user to DB
