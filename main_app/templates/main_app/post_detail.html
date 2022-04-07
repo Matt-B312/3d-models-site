@@ -97,20 +97,29 @@
           <a href="{% url 'comment_create' post.id %}">Add Comment</a>
         </div> {% endcomment %}
         {% if own_post %}
-          <div class="image-form">
-            <form
-              action="{% url 'add_photo' post.id %}"
-              enctype="multipart/form-data"
-              method="POST"
-              class="image-form"
-            >
-              {% csrf_token %}
-              <input type="file" name="photo-file" />
-              <br /><br />
-              <input type="submit" class="btn" value="Upload Photo" />
-            </form>
-            <a class="btn color blue" href="{% url 'post_update' post.id%}">Edit</a>
-            <a class="btn color red" href="{% url 'post_delete' post.id%}">Delete</a>
+          <div class="own-post">
+            <div class="image-form">
+              <form
+                action="{% url 'add_photo' post.id %}"
+                enctype="multipart/form-data"
+                method="POST"
+                class="image-form"
+              >
+            
+                {% csrf_token %}
+                <input type="file" name="photo-file" />
+                <br /><br />
+                <input type="submit" class="btn" value="Upload Photo" />
+              </form>
+            </div>
+            <div class="own-buttons">
+              <div class="">
+                <a class="btn color blue" href="{% url 'post_update' post.id%}">Edit</a>
+              </div>
+              <div>
+                <a class="btn color red" href="{% url 'post_delete' post.id%}">Delete</a>
+              </div>
+            </div>
           </div>
         {%endif%}
         </div>
@@ -120,7 +129,8 @@
 
 
   </br>
-  
+
+
 
 
   {% comment %} <h5> Comments </h5> {% endcomment %}

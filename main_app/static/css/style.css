@@ -363,7 +363,21 @@ img.icon {
 .buttons {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 .post-text {
   width: 420px;
+  padding: 42px;
+}
+
+.own-post {
+  display: flex;
+  flex-direction: column;
+}
+.own-buttons {
+  display: flex;
+  flex-direction: column;
 }
