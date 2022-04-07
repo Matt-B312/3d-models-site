@@ -343,7 +343,7 @@ img.icon {
 }
 
 .comment-box {
-  width: 500px;
+  width: 580px;
 }
 
 .post-text {
@@ -352,10 +352,10 @@ img.icon {
 }
 
 .list-card {
-  width: 360px;
-
-  text-orientation: center;
+  width: 390px;
+  padding: 30px;
 }
+
 .details {
   display: flex;
   flex-direction: row;
@@ -375,7 +375,7 @@ img.icon {
 
 .own-post {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 .own-buttons {
   display: flex;
