@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <link
+    <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
     />
@@ -30,10 +30,10 @@
   </head>
   <body>
     <div class="navbar-fixed">
-        <nav>
-          <div class="nav-wrapper">
-            <a href="{% url 'home' %}" class="brand-logo left">3D World</a >
-            <span class="babyearth">
+      <nav>
+        <div class="nav-wrapper">
+          <a href="{% url 'home' %}" class="brand-logo left">3D World</a>
+          <span class="babyearth">
             <model-viewer
               src="/media/models/Earth.glb"
               poster="media/Earth-poster.webp"
@@ -48,64 +48,76 @@
             >
             </model-viewer>
           </span>
-            <a href="#" data-activates="mobile-demo" class="button-collapse"
-              ><i class="material-icons">menu</i></a
-            >
-            <div class="brand-logo center">
-              <ul class="right hide-on-med-and-down nowrap">
-                 <li>
-                  <a href="{%url 'posts_index' %}">Models</a>
-                </li>
-                {% if user.is_authenticated %}
+          <a href="#" data-activates="mobile-demo" class="button-collapse"
+            ><i class="material-icons">menu</i></a
+          >
+          <div class="brand-logo center">
+            <ul class="right">
+              {% if user.is_authenticated %}
+              <li>
+                <a href="{%url 'post_create' %}">Add Model</a>
+              </li>
+              <li>
+                <a href="{%url 'posts_index' %}">Models</a>
+              </li>
+              <li>
+                <a href="{%url 'user_posts_index' %}">My Models</a>
+              </li>
+            </ul>
+          </div>
+          <div class="right">
+            <ul class="right-nav right">
+              <div class="right-nav">
+                <div class="left">
+                  <form
+                    class="searchbar left"
+                    method="post"
+                    action=" {% url 'search_post' %}"
+                  >
+                    {% csrf_token %}
+                    <div class="input-field left">
+                      <input
+                        id="search"
+                        type="search"
+                        placeholder="Search"
+                        name="searched"
+                        required
+                        class="search-bar"
+                      />
+                    </div>
+                  </form>
+                </div>
                 <li>
-                  <a href="{%url 'post_create' %}">Add Model</a>
+                  <a href="{% url 'profile' %}"
+                    ><img class="circle icon" src="{{ user.account.picture }}"
+                  /></a>
                 </li>
                 <li>
-                  <a href="{%url 'user_posts_index' %}">My Models</a>
+                  <a href="{% url 'profile' %}"
+                    ><img class="circle icon" src="{{ user.account.picture }}"
+                  /></a>
                 </li>
                 <li>
                   <a href="{% url 'profile' %}">{{user.username}}</a>
                 </li>
                 <li><a href="{% url 'logout' %}">Log Out</a></li>
+
                 {%else%}
                 <li>
                   <a href="{%url 'login' %}">Log In</a>
                 </li>
                 <li><a href="{% url 'signup' %}">Sign Up</a></li>
                 {%endif%}
-              </ul>
-            </div>
+              </div>
+            </ul>
           </div>
-        </nav>
-      </div>
-      <ul class="side-nav" id="mobile-demo">
-        <li>
-          <a href="{%url 'posts_index' %}">Models</a>
-        </li>
-        {% if user.is_authenticated %}
-        <li>
-          <a href="{%url 'post_create' %}">Add Model</a>
-        </li>
-        <li>
-          <a href="{%url 'user_posts_index' %}">My Models</a>
-        </li>
-        <li>
-          <a href="{% url 'profile' %}">{{user.username}}</a>
-        </li>
-        <li><a href="{% url 'logout' %}">Log Out</a></li>
-        {%else%}
-        <li>
-          <a href="{%url 'login' %}">Log In</a>
-        </li>
-        <li><a href="{% url 'signup' %}">Sign Up</a></li>
-        {%endif%}
-      </ul>
-    </header>
+        </div>
+      </nav>
+    </div>
 
     <main class="container">{% block content %} {% endblock %}</main>
-  {% comment %} #----------------------------------------# {% endcomment %}
-    
-  
+    {% comment %} #----------------------------------------# {% endcomment %}
+
     <footer class="page-footer">
       <div class="center">All Rights reserved &copy; 2022 3D World</div>
     </footer>
@@ -116,3 +128,84 @@
     ></script>
   </body>
 </html>
+
+{% comment %} --------------------- {% endcomment %}
+
+<div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper">
+      <a href="{% url 'home' %}" class="brand-logo left">3D World</a
+      ><span class="babyearth">
+        <model-viewer
+          src="/media/models/Earth.glb"
+          poster="media/Earth-poster.webp"
+          seamless-poster
+          environment-image="neutral"
+          shadow-intensity="1"
+          autoplay
+          auto-rotate
+          auto-rotate-delay="1"
+          basic
+          rotation-per-second="400%"
+        >
+        </model-viewer>
+      </span>
+
+      <div class="brand-logo center">
+        <ul class="right">
+          {% if user.is_authenticated %}
+          <li>
+            <a href="{%url 'post_create' %}">Add Model</a>
+          </li>
+          <li>
+            <a href="{%url 'posts_index' %}">Models</a>
+          </li>
+          <li>
+            <a href="{%url 'user_posts_index' %}">My Models</a>
+          </li>
+        </ul>
+      </div>
+      <div class="right">
+        <ul class="right-nav right">
+          <div class="right-nav">
+            <div class="left">
+              <form
+                class="searchbar left"
+                method="post"
+                action=" {% url 'search_post' %}"
+              >
+                {% csrf_token %}
+                <div class="input-field left">
+                  <input
+                    id="search"
+                    type="search"
+                    placeholder="Search"
+                    name="searched"
+                    required
+                    class="search-bar"
+                  />
+                </div>
+              </form>
+            </div>
+            <li>
+              <a href="{% url 'profile' %}"
+                ><img class="circle icon" src="{{ user.account.picture }}"
+              /></a>
+            </li>
+            <li>
+              <a href="{% url 'profile' %}">{{user.username}}</a>
+            </li>
+            <li><a href="{% url 'logout' %}">Log Out</a></li>
+
+            {%else%}
+            <li>
+              <a href="{%url 'login' %}">Log In</a>
+            </li>
+            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+            {%endif%}
+          </div>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
