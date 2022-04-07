@@ -75,6 +75,12 @@ def home(request):
 
 def posts_index(request):
     post_list = Post.objects.all()
+    for post in post_list: 
+        post.like_count = len(post.likes.all())
+        print(post.like_count)
+    # likes_sort = sorted(post_list, key=likes filter()
+    # sorted(list, key=..., reverse=...)
+    # Post.objects.get(id=pk).likes.all():
     #infiniscroll test
     page = request.GET.get('page', 1)
     paginator = Paginator(post_list, 18)
