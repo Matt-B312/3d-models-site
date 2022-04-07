@@ -122,16 +122,9 @@
         <li>
           <a href="{%url 'user_posts_index' %}">My Models</a>
         </li>
-            
-    
-          
+     
           <li>
-            <a href="{% url 'profile' %}"
-              ><img class="circle icon" src="{{ user.account.picture }}"
-            /></a>
-          </li>
-          <li>
-            <a href="{% url 'profile' %}">{{user.username}}</a>
+            <a href="{% url 'profile' %}">{{user.username}}<img class="circle icon" src="{{ user.account.picture }}"/></a>
           </li>
           <li><a href="{% url 'logout' %}">Log Out</a></li>
 
