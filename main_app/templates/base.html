@@ -52,7 +52,7 @@
             ><i class="material-icons">menu</i></a
           >
           <div class="brand-logo center">
-            <ul class="right hide-on-med-and-down nowrap">
+            <ul class="hide-on-med-and-down nowrap">
               <li>
                 <a href="{%url 'posts_index' %}">Models</a>
               </li>
@@ -64,12 +64,12 @@
               <li>
                 <a href="{%url 'user_posts_index' %}">My Models</a>
               </li>
+              {%endif%}
             </ul>
           </div>
           <div class="right">
             <ul class="right hide-on-med-and-down nowrap">
               <div class="right-nav">
-              {%endif%}
                 <li>
                   <form
                     class="searchbar left"
