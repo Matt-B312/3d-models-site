@@ -111,6 +111,8 @@
                 {% csrf_token %}
                 <input type="file" name="photo-file" />
                 <br /><br />
+                <p>Uploaded By: {{post.user.username}} <img class="responsive-img icon" src="{{post.user.account.picture}}" /> </p>
+                <br>
                 <input type="submit" class="btn" value="Upload Photo" />
               </form>
             </div>

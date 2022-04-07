@@ -78,6 +78,7 @@ class Comment(models.Model):
     # account = models.ForeignKey(Post, on_delete=models.CASCADE)
     # created_on = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     # class Meta:
     #     ordering = ['created_on']
@@ -92,6 +93,7 @@ class Comment(models.Model):
 class Photo(models.Model):
     url = models.CharField(max_length=3000)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    
 
     
 
