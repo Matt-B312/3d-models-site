@@ -115,30 +115,30 @@ def signup(request):
             key = uuid.uuid4().hex[:6] + account_pic.name[account_pic.name.rfind('.'):]
             print("key test", key)
             # just in case something goes wrong
-            try:
-                s3.upload_fileobj(account_pic, BUCKET, key)
-                # build the full url string
-                url = f"{S3_LINK_URL}{key}"
-                print('url',url)
-                account_form = AccountCreate(request.POST)
-                if form.is_valid():
-                    print("accountForm", account_form)
-                    #save user to DB
-                    user = form.save()
-                    account = account_form.save(commit=False)
-                    account.user = user
-                    account.picture = url
-                    print('AccountURL:', account.picture)
-                    # account.save()
-                    #login the user
-                    login(request, user)
-                    Account.objects.create(user=request.user)
-                    return redirect('/')
-                else:
-                    error_message = "Invalid Sign Up Submission - Try Again"
+            # try:
+            s3.upload_fileobj(account_pic, BUCKET, key)
+            # build the full url string
+            url = f"{S3_LINK_URL}{key}"
+            print('url',url)
+            account_form = AccountCreate(request.POST)
+            if form.is_valid():
+                print("accountForm", account_form)
+                #save user to DB
+                user = form.save()
+                account = account_form.save(commit=False)
+                account.user = user
+                account.picture = url
+                print('AccountURL:', account.picture)
+                account.save()
+                #login the user
+                login(request, user)
+                Account.objects.create(user=request.user)
+                return redirect('/')
+            else:
+                error_message = "Invalid Sign Up Submission - Try Again"
 
-            except:
-               print('An error occurred uploading file to S3')
+            # except:
+            #    print('An error occurred uploading file to S3')
         
         
     form = EditUserForm()
