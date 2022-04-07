@@ -421,3 +421,8 @@ img.icon {
 .bottom-left {
   margin: 0 auto;
 }
+
+.bottom-right {
+  padding: 30px;
+  padding-top: 5px;
+}
