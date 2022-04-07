@@ -70,7 +70,7 @@ class Post(models.Model):
 ## Comment
 class Comment(models.Model):
     #username = models.CharField(max_length=200, default=None, blank=True)
-    images = models.CharField(max_length=2000, default=None, blank=True, null=True)
+    # images = models.CharField(max_length=2000, default=None, blank=True, null=True)
     text_content = models.CharField(max_length=3000)
     title = models.CharField(max_length=100)
     # post = models.ForeignKey(Post, on_delete=models.CASCADE,blank=True, null=True)
@@ -78,6 +78,7 @@ class Comment(models.Model):
     # account = models.ForeignKey(Post, on_delete=models.CASCADE)
     # created_on = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     # class Meta:
     #     ordering = ['created_on']
@@ -92,6 +93,7 @@ class Comment(models.Model):
 class Photo(models.Model):
     url = models.CharField(max_length=3000)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    
 
     
 
