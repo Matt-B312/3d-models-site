@@ -1,3 +1,5 @@
+import operator
+from operator import attrgetter
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Account, Comment, Post, Photo
@@ -61,9 +63,10 @@ def add_photo(request, post_id):
 
 def home(request):
     post_list = Post.objects.all()
+    new_sort = sorted(post_list, key=attrgetter('pk'), reverse=True)
     #infiniscroll test
     page = request.GET.get('page', 1)
-    paginator = Paginator(post_list, 18)
+    paginator = Paginator(new_sort, 18)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -73,21 +76,53 @@ def home(request):
     return render(request, 'home.html', {'post_list': post_list , 'posts': posts})
 
 
-def posts_index(request, sort="like_sort"):
+def home_oldest(request):
+    post_list = Post.objects.all()
+    old_sort = sorted(post_list, key=attrgetter('pk'), reverse=False)
+    #infiniscroll test
+    page = request.GET.get('page', 1)
+    paginator = Paginator(old_sort, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'home.html', {'post_list': post_list , 'posts': posts})
+
+def home_likes(request):
     post_list = Post.objects.all()
     for post in post_list: 
         post.like_count = len(post.likes.all())
-        print("like counter",post.like_count)
-    
-    like_sort = sorted(post_list['like_count'])
-    print('like-sort test',like_sort)
-    
-    # likes_sort = sorted(post_list, key=likes filter()
-    # sorted(list, key=..., reverse=...)
-    # Post.objects.get(id=pk).likes.all():
+    like_sort = sorted(post_list, key=attrgetter('like_count'), reverse=True)
     #infiniscroll test
     page = request.GET.get('page', 1)
-    paginator = Paginator(post_list, 18)
+    paginator = Paginator(like_sort, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'home.html', {'post_list': post_list , 'posts': posts})
+
+
+
+
+
+
+
+# def posts_index(request, sort='new_sort'):
+def posts_index(request):
+    post_list = Post.objects.all()
+    for post in post_list: 
+        post.like_count = len(post.likes.all())
+    new_sort = sorted(post_list, key=attrgetter('pk'), reverse=True)
+    
+    
+    
+    page = request.GET.get('page', 1)
+    paginator = Paginator(new_sort, 18)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -95,6 +130,45 @@ def posts_index(request, sort="like_sort"):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
     return render(request, 'main_app/posts_index.html', {'post_list': post_list , 'posts': posts})
+
+def posts_index_likes(request):
+    post_list = Post.objects.all()
+    for post in post_list: 
+        post.like_count = len(post.likes.all())
+
+    like_sort = sorted(post_list, key=attrgetter('like_count'), reverse=True)
+    
+    
+    
+    page = request.GET.get('page', 1)
+    paginator = Paginator(like_sort, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'main_app/posts_index.html', {'post_list': post_list , 'posts': posts})
+
+
+def posts_index_oldest(request):
+    post_list = Post.objects.all()
+    for post in post_list: 
+        post.like_count = len(post.likes.all())
+
+    
+    old_sort = sorted(post_list, key=attrgetter('pk'), reverse=False) 
+    
+    page = request.GET.get('page', 1)
+    paginator = Paginator(old_sort, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'main_app/posts_index.html', {'post_list': post_list , 'posts': posts})
+
 
 
 def user_posts_index(request):

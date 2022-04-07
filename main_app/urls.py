@@ -4,12 +4,16 @@ from .views import LikeView, UnlikeView, SearchPost
 
 urlpatterns = [
     path('', views.home, name="home"), #in views folder use home view
-
+    path('oldest', views.home_oldest, name="home_oldest"),
+    path('likes', views.home_likes, name="home_likes"),
+    
     
     
     #POSTs
     path('posts/create', views.PostCreate.as_view(), name="post_create"),
     path('posts', views.posts_index, name="posts_index"),
+    path('posts/likes', views.posts_index_likes, name="posts_index_likes"),
+    path('posts/oldest', views.posts_index_oldest, name="posts_index_oldest"),
     path('posts/user', views.user_posts_index, name="user_posts_index"),
     path('posts/<int:pk>/update/', views.PostUpdate.as_view(), name="post_update"),
     path('posts/<int:pk>/delete/', views.PostDelete.as_view(), name="post_delete"),
