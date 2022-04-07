@@ -24,9 +24,9 @@ from django.shortcuts import redirect, render
 
 class Account(models.Model):
 
-    # picture = models.FileField(blank=True, null=True, upload_to="models/accountImg", default="/media/models/accountImg/default.png" )
+    picture = models.FileField(blank=True, null=True, upload_to="models/accountImg", default="/media/models/accountImg/default.png" )
 
-    picture = models.CharField(default='https://i.imgur.com/pDEWNFJ.png', blank=True, null=True, max_length=2000)
+    # picture = models.CharField(default='https://i.imgur.com/pDEWNFJ.png', blank=True, null=True, max_length=2000)
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # likes = models.ManyToManyField(Comment)
