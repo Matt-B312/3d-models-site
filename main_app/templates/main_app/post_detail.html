@@ -70,45 +70,57 @@
      
         <br>
           <p class="hidden">Tags: {{post.tags}}</p>
-
-        <div class="post-text">
-          <p>{{post.text_content}}</p>
-          
-          <a href="{{post.model}}"><input type="button" value="Download" class="btn"></a>
-          
-          {% if not liked %}
-          <form class="transparent" action=" {% url 'like_post' post.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" name="post_id" value="{{ post.id }}" class="btn color blue" >Like</button> {{post.total_likes}} Likes
-          </form>
-          {% else %}
-          <form action=" {% url 'unlike_post' post.id %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" name="post_id" value="{{ post.id }}" class="btn color red unlike" value="Like">Like</button> {{post.total_likes}} Likes
-          </form>
-          {% endif %}
-          <p>Download Count: {{post.downloads}}</p>
-          <p>{{account.name}}</p>
+        <div class="details">
+          <div class="post-text">
+            <p>{{post.text_content}}</p>
           </div>
-        
+          <div class="buttons">  
+            <a href="{{post.model}}"><input type="button" value="Download" class="btn"></a>
+            
+            {% if not liked %}
+            <form class="transparent" action=" {% url 'like_post' post.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" name="post_id" value="{{ post.id }}" class="btn color blue" >Like</button> {{post.total_likes}} Likes
+            </form>
+            {% else %}
+            <form action=" {% url 'unlike_post' post.id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" name="post_id" value="{{ post.id }}" class="btn color red unlike" value="Like">Like</button> {{post.total_likes}} Likes
+            </form>
+            {% endif %}
+            <p>Download Count: {{post.downloads}}</p>
+            <br />
+            <p>Uploaded By:{{post.user.username}} <img class="responsive-img icon" src="{{post.user.account.picture}}" /> </p>
+    
+          </div>
+        </div>
         {% comment %} <div>
           <a href="{% url 'comment_create' post.id %}">Add Comment</a>
         </div> {% endcomment %}
         {% if own_post %}
-          <div class="image-form">
-            <form
-              action="{% url 'add_photo' post.id %}"
-              enctype="multipart/form-data"
-              method="POST"
-              class="image-form"
-            >
-              {% csrf_token %}
-              <input type="file" name="photo-file" />
-              <br /><br />
-              <input type="submit" class="btn" value="Upload Photo" />
-            </form>
-            <a class="btn color blue" href="{% url 'post_update' post.id%}">Edit</a>
-            <a class="btn color red" href="{% url 'post_delete' post.id%}">Delete</a>
+          <div class="own-post">
+            <div class="image-form details-image-form">
+              <form
+                action="{% url 'add_photo' post.id %}"
+                enctype="multipart/form-data"
+                method="POST"
+                class="image-form"
+              >
+            
+                {% csrf_token %}
+                <input type="file" name="photo-file" />
+                <br /><br />
+                <input type="submit" class="btn" value="Upload Photo" />
+              </form>
+            </div>
+            <div class="own-buttons">
+              <div class="">
+                <a class="btn color blue" href="{% url 'post_update' post.id%}">Edit</a>
+              </div>
+              <div>
+                <a class="btn color red" href="{% url 'post_delete' post.id%}">Delete</a>
+              </div>
+            </div>
           </div>
         {%endif%}
         </div>
@@ -118,7 +130,8 @@
 
 
   </br>
-  
+
+
 
 
   {% comment %} <h5> Comments </h5> {% endcomment %}

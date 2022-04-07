@@ -10,5 +10,6 @@ main_app/migrations/__pycache__/0001_initial.cpython-39.pyc
 main_app/migrations/__pycache__/__init__.cpython-39.pyc
 requirements.txt
 
+
 _migrations/*
 !_migrations/__init__.py
