@@ -129,7 +129,7 @@ def signup(request):
                     account.user = user
                     account.picture = url
                     print('AccountURL:', account.picture)
-                    account.save()
+                    # account.save()
                     #login the user
                     login(request, user)
                     Account.objects.create(user=request.user)
