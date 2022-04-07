@@ -311,6 +311,7 @@ img.responsive-img {
   height: 25px;
   position: relative;
   top: -10px;
+  width: 125px;
 }
 
 img.icon {
@@ -320,6 +321,14 @@ img.icon {
   display: inline-block;
   position: relative;
   top: 10px;
+}
+
+img.alt-icon {
+  width: 45px;
+  height: 45px;
+  margin: 0 auto;
+  display: inline-block;
+
 }
 
 .hidden {
@@ -394,6 +403,9 @@ img.icon {
 }
 
 .search-bar {
+  width: 130px;
+}
+.min-search-bar {
   width: 130px;
 }
 
