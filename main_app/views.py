@@ -78,7 +78,7 @@ def posts_index(request, sort="like_sort"):
     for post in post_list: 
         post.like_count = len(post.likes.all())
     
-    like_sort = sorted(post_list, key=post['like_count'])
+    like_sort = sorted(post_list, key=post.like_count)
     print('like-sort test',like_sort)
     
     # likes_sort = sorted(post_list, key=likes filter()
@@ -162,7 +162,7 @@ def profile(request):
     return render(request, 'registration/profile.html', {'profile_details':profile_details, 'like_count':like_count, 'post_count':post_count})
 
 
-
+@login_required
 def add_model(request, post_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('model', None)
@@ -231,6 +231,7 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 
 # class PostDetail(LoginRequiredMixin, DetailView):
 #     model = Post
+
 def detail(request, pk):
     post = Post.objects.get(id=pk)
     own_post = False
@@ -299,13 +300,13 @@ class CommentDelete(LoginRequiredMixin, DeleteView):
         return self.request.GET.get('next', reverse('posts_index')) 
     
 
-
+@login_required
 def LikeView(request, pk):
     print("POST", Post)
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
     post.likes.add(request.user)
     return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
-
+@login_required
 def UnlikeView(request, pk):
     print("POST", Post)
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
