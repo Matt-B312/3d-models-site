@@ -1,3 +1,5 @@
+import operator
+from operator import attrgetter
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Account, Comment, Post, Photo
@@ -61,9 +63,10 @@ def add_photo(request, post_id):
 
 def home(request):
     post_list = Post.objects.all()
+    new_sort = sorted(post_list, key=attrgetter('pk'), reverse=True)
     #infiniscroll test
     page = request.GET.get('page', 1)
-    paginator = Paginator(post_list, 18)
+    paginator = Paginator(new_sort, 18)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -73,11 +76,53 @@ def home(request):
     return render(request, 'home.html', {'post_list': post_list , 'posts': posts})
 
 
-def posts_index(request):
+def home_oldest(request):
     post_list = Post.objects.all()
+    old_sort = sorted(post_list, key=attrgetter('pk'), reverse=False)
     #infiniscroll test
     page = request.GET.get('page', 1)
-    paginator = Paginator(post_list, 18)
+    paginator = Paginator(old_sort, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'home.html', {'post_list': post_list , 'posts': posts})
+
+def home_likes(request):
+    post_list = Post.objects.all()
+    for post in post_list: 
+        post.like_count = len(post.likes.all())
+    like_sort = sorted(post_list, key=attrgetter('like_count'), reverse=True)
+    #infiniscroll test
+    page = request.GET.get('page', 1)
+    paginator = Paginator(like_sort, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'home.html', {'post_list': post_list , 'posts': posts})
+
+
+
+
+
+
+
+# def posts_index(request, sort='new_sort'):
+def posts_index(request):
+    post_list = Post.objects.all()
+    for post in post_list: 
+        post.like_count = len(post.likes.all())
+    new_sort = sorted(post_list, key=attrgetter('pk'), reverse=True)
+    
+    
+    
+    page = request.GET.get('page', 1)
+    paginator = Paginator(new_sort, 18)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -85,6 +130,45 @@ def posts_index(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
     return render(request, 'main_app/posts_index.html', {'post_list': post_list , 'posts': posts})
+
+def posts_index_likes(request):
+    post_list = Post.objects.all()
+    for post in post_list: 
+        post.like_count = len(post.likes.all())
+
+    like_sort = sorted(post_list, key=attrgetter('like_count'), reverse=True)
+    
+    
+    
+    page = request.GET.get('page', 1)
+    paginator = Paginator(like_sort, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'main_app/posts_index.html', {'post_list': post_list , 'posts': posts})
+
+
+def posts_index_oldest(request):
+    post_list = Post.objects.all()
+    for post in post_list: 
+        post.like_count = len(post.likes.all())
+
+    
+    old_sort = sorted(post_list, key=attrgetter('pk'), reverse=False) 
+    
+    page = request.GET.get('page', 1)
+    paginator = Paginator(old_sort, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    return render(request, 'main_app/posts_index.html', {'post_list': post_list , 'posts': posts})
+
 
 
 def user_posts_index(request):
@@ -153,7 +237,7 @@ def profile(request):
     return render(request, 'registration/profile.html', {'profile_details':profile_details, 'like_count':like_count, 'post_count':post_count})
 
 
-
+@login_required
 def add_model(request, post_id):
     # photo-file will be the "name" attribute on the <input type="file">
     photo_file = request.FILES.get('model', None)
@@ -222,6 +306,7 @@ class PostDelete(LoginRequiredMixin, DeleteView):
 
 # class PostDetail(LoginRequiredMixin, DetailView):
 #     model = Post
+
 def detail(request, pk):
     post = Post.objects.get(id=pk)
     own_post = False
@@ -290,13 +375,13 @@ class CommentDelete(LoginRequiredMixin, DeleteView):
         return self.request.GET.get('next', reverse('posts_index')) 
     
 
-
+@login_required
 def LikeView(request, pk):
     print("POST", Post)
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
     post.likes.add(request.user)
     return HttpResponseRedirect(reverse('post_detail', args=[str(pk)]))
-
+@login_required
 def UnlikeView(request, pk):
     print("POST", Post)
     post = get_object_or_404(Post, id=request.POST.get('post_id'))

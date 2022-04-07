@@ -1,6 +1,6 @@
 {% extends "base.html"%} {% block content %}
 
-<h1>3D World</h1>
+<h1 class="index-h1">3D World</h1>
 
 <div class="earth">
   <model-viewer
@@ -21,6 +21,14 @@
     rotation-per-second="250%"
   >
   </model-viewer>
+</div>
+<div class="right">
+  <select class="sorter" onchange="window.location=this.value">
+    <option value="value" disabled selected hidden>Sort By</option>
+    <option value="/posts/likes">Likes</option>
+    <option value="/posts">Newest</option>
+    <option value="/posts/oldest">Oldest</option>
+  </select>
 </div>
 <div class="infinite-container">
   <div class="list">
