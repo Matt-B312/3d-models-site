@@ -7,14 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"
     />
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+
     <script>
       $(document).ready(function () {
         $(".button-collapse").sideNav();
       });
     </script>
-
     <title>3D World</title>
     <link
       rel="stylesheet"
@@ -27,8 +32,8 @@
     <div class="navbar-fixed">
       <nav>
         <div class="nav-wrapper">
-          <a href="{% url 'home' %}" class="brand-logo left">3D World</a
-          ><span class="babyearth">
+          <a href="{% url 'home' %}" class="brand-logo">3D World</a>
+          <span class="babyearth">
             <model-viewer
               src="/media/models/Earth.glb"
               poster="media/Earth-poster.webp"
@@ -43,23 +48,26 @@
             >
             </model-viewer>
           </span>
-
+          <a href="#" data-activates="mobile-demo" class="button-collapse"
+            ><i class="material-icons">menu</i></a
+          >
           <div class="brand-logo center">
-            <ul class="right">
+            <ul class="right hide-on-med-and-down nowrap">
+              <li>
+                <a href="{%url 'posts_index' %}">Models</a>
+              </li>
               {% if user.is_authenticated %}
               <li>
                 <a href="{%url 'post_create' %}">Add Model</a>
               </li>
-              <li>
-                <a href="{%url 'posts_index' %}">Models</a>
-              </li>
+              
               <li>
                 <a href="{%url 'user_posts_index' %}">My Models</a>
               </li>
             </ul>
           </div>
           <div class="right">
-            <ul class="right-nav right">
+            <ul class="right hide-on-med-and-down nowrap">
               <div class="right-nav">
                 <div class="left">
                   <form
@@ -102,8 +110,37 @@
         </div>
       </nav>
     </div>
+    <ul class="side-nav" id="mobile-demo">
+        <li>
+          <a href="{%url 'posts_index' %}">Models</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li>
+          <a href="{%url 'post_create' %}">Add Model</a>
+        </li>
+        
+        <li>
+          <a href="{%url 'user_posts_index' %}">My Models</a>
+        </li>
+     
+          <li>
+            <a href="{% url 'profile' %}">{{user.username}}<img class="circle icon" src="{{ user.account.picture }}"/></a>
+          </li>
+          <li><a href="{% url 'logout' %}">Log Out</a></li>
+
+          {%else%}
+          <li>
+            <a href="{%url 'login' %}">Log In</a>
+          </li>
+          <li><a href="{% url 'signup' %}">Sign Up</a></li>
+          {%endif%}
+        </ul>
+    </header>
+     
 
     <main class="container">{% block content %} {% endblock %}</main>
+   
+
     <footer class="page-footer">
       <div class="center">All Rights reserved &copy; 2022 3D World</div>
     </footer>
