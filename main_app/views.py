@@ -255,10 +255,10 @@ class CommentCreate(LoginRequiredMixin, CreateView):
         # print("POST Test",self.request.POST)
         form = Comment(title=self.request.POST.get('title'),text_content=self.request.POST.get('text_content'))
         form.user_id = self.request.user.id
-        form.instance.post_id = self.kwargs.get('pk')
+        form.post_id = self.kwargs.get('pk')
         form.save()
         # comment = Comment.objects.get(id=form.id)
-        return HttpResponseRedirect(reverse('post_detail', args=[form.instance.post_id]))
+        return HttpResponseRedirect(reverse('post_detail', args=[form.post_id]))
     
     #overriding in child class
     # def form_valid(self, form):
