@@ -348,7 +348,7 @@ class UserEditView(generic.CreateView):
     success_url = '/home' 
 
 
-
+@login_required
 def edit_profile(request):
     error_message = ''
     if request.method == 'POST':
