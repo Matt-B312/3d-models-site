@@ -113,26 +113,7 @@
       </nav>
     </div>
     <ul class="side-nav" id="mobile-demo">
-     <li> 
-        <form
-            class="searchbar left"
-            method="post"
-            action=" {% url 'search_post' %}"
-          >
-            {% csrf_token %}
-            <div class="input-field left ">
-              <input
-                id="search"
-                type="search"
-                placeholder="Search"
-                name="searched"
-                required
-                class="min-search-bar"
-              />
-            </div>
-          </form>  
-        </li>
-        <li></li>
+     
       <li>
           <a href="{%url 'posts_index' %}">Models</a>
         </li>
@@ -156,6 +137,25 @@
           </li>
           <li><a href="{% url 'signup' %}">Sign Up</a></li>
           {%endif%}
+          <li> 
+            <form
+              class="searchbar left"
+              method="post"
+              action=" {% url 'search_post' %}"
+            >
+            {% csrf_token %}
+            <div class="input-field left ">
+              <input
+                id="search"
+                type="search"
+                placeholder="Search"
+                name="searched"
+                required
+                class="min-search-bar"
+              />
+            </div>
+          </form>  
+        </li>
         </ul>
     </header>
      
