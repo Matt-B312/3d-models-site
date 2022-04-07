@@ -89,8 +89,8 @@
             </form>
             {% endif %}
             <p>Download Count: {{post.downloads}}</p>
-            <p>Uploaded By:{{post.account.name}}</p>
-            
+            <br />
+            <p>Uploaded By:{{post.user.username}} <img class="responsive-img card-panel" src="{{post.user.account.photo}}" /> </p>
           </div>
         </div>
         {% comment %} <div>
