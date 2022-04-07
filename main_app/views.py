@@ -126,7 +126,7 @@ def signup(request):
                 #save user to DB
                 user = form.save()
                 account = account_form.save(commit=False)
-                account.user = user
+                # account.user = user
                 account.picture = url
                 print('AccountURL:', account.picture)
                 account.save()
