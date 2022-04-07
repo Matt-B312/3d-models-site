@@ -323,6 +323,14 @@ img.icon {
   top: 10px;
 }
 
+img.alt-icon {
+  width: 45px;
+  height: 45px;
+  margin: 0 auto;
+  display: inline-block;
+
+}
+
 .hidden {
   visibility: hidden;
 }
