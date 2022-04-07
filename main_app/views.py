@@ -387,6 +387,7 @@ def edit_profile(request):
                     error_message = "Invalid Edit Submission - Try Again"
                         
             except:
+                
                 print('An error occurred uploading file to S3')
     form = EditUserForm(instance=request.user)
     account_form = AccountCreate(instance=request.user)
