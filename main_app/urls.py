@@ -38,7 +38,7 @@ urlpatterns = [
     # path('account/edit_profile',views.UserEditView.as_view(),name='edit_profile'),
     
 
-    # path('upload/', views.upload, name='upload'),
+    # path('upload/', views.upload, name='upload')
     
     path('profile/', views.profile, name='profile'),
     
