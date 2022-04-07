@@ -69,6 +69,7 @@
           <div class="right">
             <ul class="right hide-on-med-and-down nowrap">
               <div class="right-nav">
+              {%endif%}
                 <div class="left">
                   <form
                     class="searchbar left"
@@ -88,6 +89,7 @@
                     </div>
                   </form>
                 </div>
+                {% if user.is_authenticated %}
                 <li>
                   <a href="{% url 'profile' %}"
                     ><img class="circle icon" src="{{ user.account.picture }}"
@@ -111,7 +113,26 @@
       </nav>
     </div>
     <ul class="side-nav" id="mobile-demo">
-        <li>
+     <li> 
+        <form
+            class="searchbar left"
+            method="post"
+            action=" {% url 'search_post' %}"
+          >
+            {% csrf_token %}
+            <div class="input-field left">
+              <input
+                id="search"
+                type="search"
+                placeholder="Search"
+                name="searched"
+                required
+                class="search-bar"
+              />
+            </div>
+          </form>  
+        </li>
+      <li>
           <a href="{%url 'posts_index' %}">Models</a>
         </li>
         {% if user.is_authenticated %}
