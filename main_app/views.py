@@ -227,14 +227,32 @@ def profile(request):
     profile_details = Account.objects.all()
     like_count = 0
     holder = request.user
-    # print("id - ",holder.username)
     posts = Post.objects.filter(user=holder.id)
     post_count =  len(posts)
-    
     for post in posts:
         like_count += (post.likes.all().count())
+        
+    post_sort = Post.objects.filter(likes=request.user.id)
+    print(post_sort)
+    new_sort = sorted(post_sort, key=attrgetter('pk'), reverse=True)
+   
+    page = request.GET.get('page', 1)
+    paginator = Paginator(new_sort, 18)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    
+        
+        
+     
+        
+        
+        
 
-    return render(request, 'registration/profile.html', {'profile_details':profile_details, 'like_count':like_count, 'post_count':post_count})
+    return render(request, 'registration/profile.html', {'profile_details':profile_details, 'like_count':like_count, 'post_count':post_count, 'posts': posts})
 
 
 @login_required
