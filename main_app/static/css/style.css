@@ -311,6 +311,7 @@ img.responsive-img {
   height: 25px;
   position: relative;
   top: -10px;
+  width: 125px;
 }
 
 img.icon {
@@ -394,6 +395,9 @@ img.icon {
 }
 
 .search-bar {
+  width: 130px;
+}
+.min-search-bar {
   width: 130px;
 }
 
