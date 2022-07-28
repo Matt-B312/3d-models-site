@@ -41,7 +41,7 @@ Each post will have a detail page that allows the post creator to upload more im
 ## Getting Started
 
 Install instructions goes here:
-Link to Heroku goes here:
+Link to Heroku goes here: https://the3dmodelssite.herokuapp.com/
 
 ## About The Project
 
